@@ -4,7 +4,12 @@ import 'app_colors.dart';
 
 class AppTextStyle {
   static TextStyle smallBlack = TextStyle(color: AppColors.black);
+  static TextStyle smallerBlack = TextStyle(
+    color: AppColors.black,
+    fontSize: 12,
+  );
   static TextStyle smallGrey = TextStyle(color: AppColors.grey);
+  static TextStyle smallerGrey = TextStyle(color: AppColors.grey, fontSize: 12);
   static TextStyle tittle = TextStyle(
     color: AppColors.black,
     fontSize: 20,
