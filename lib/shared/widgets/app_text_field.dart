@@ -8,11 +8,13 @@ class AppTextField extends StatefulWidget {
     required this.hintText,
     this.padding,
     this.obscureText = false,
+    this.onChanged,
   });
 
   final String hintText;
   final bool obscureText;
   final EdgeInsetsGeometry? padding;
+  final Function(String)? onChanged;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -38,6 +40,7 @@ class _AppTextFieldState extends State<AppTextField> {
     return Padding(
       padding: widget.padding ?? EdgeInsets.all(0),
       child: TextField(
+        onChanged: widget.onChanged,
         obscureText: isObscure,
         decoration: InputDecoration(
           suffixIcon: widget.obscureText
