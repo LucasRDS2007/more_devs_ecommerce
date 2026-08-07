@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
   flutter_native_splash: ^2.4.8
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -24,11 +23,11 @@ flutter:
     - assets/images/
 
 flutter_native_splash:
+  color: "#ffffff"
+  image: assets/images/cadeado.png
+  color_dark: "#ffffff"
+
+  android_12:
     color: "#ffffff"
     image: assets/images/cadeado.png
-    color_dark: "#ffffff"
-
-    android_12:
-      color: "#ffffff"
-      image: assets/images/cadeado.png
-      icon_background_color: "#111111"
+    icon_background_color: "#111111"

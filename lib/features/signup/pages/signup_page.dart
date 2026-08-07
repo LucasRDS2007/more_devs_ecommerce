@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
@@ -12,44 +13,6 @@ class SignupPage extends StatefulWidget {
 
   @override
   State<SignupPage> createState() => _SignupPageState();
-}
-
-class SignupController {
-  String email = '';
-  String nome = '';
-  String senha = '';
-  String confirmarSenha = '';
-  bool isActiveChecked = false;
-  bool isActiveButton = false;
-
-  void setEmail(String emailParam) {
-    email = emailParam;
-  }
-
-  void setNome(String nomeParam) {
-    nome = nomeParam;
-  }
-
-  void setSenha(String senhaParam) {
-    senha = senhaParam;
-  }
-
-  void setConfirmarSenha(String confirmarSenhaParam) {
-    confirmarSenha = confirmarSenhaParam;
-  }
-
-  void changeActiveButton() {
-    isActiveButton =
-        email.trim().isNotEmpty &&
-        nome.trim().isNotEmpty &&
-        senha.trim().isNotEmpty &&
-        confirmarSenha.trim().isNotEmpty &&
-        isActiveChecked;
-  }
-
-  void changeActiveCheckbox() {
-    isActiveChecked = !isActiveChecked;
-  }
 }
 
 class _SignupPageState extends State<SignupPage> {
