@@ -91,6 +91,6 @@ Por isso, o projeto estará em **constante evolução**, acompanhando o desenvol
 
 ---
 
-### 👨‍💻 More Devs
+### 👨‍💻 +DEVS2BLU
 
-Projeto desenvolvido para estudos e evolução contínua no desenvolvimento com **Flutter**.
+Projeto desenvolvido para estudos e evolução contínua no desenvolvimento com **Flutter**. Durante o curso do +DEVS2BLU.
