@@ -43,6 +43,7 @@ class _SignupPageState extends State<SignupPage> {
                     style: AppTextStyle.subTittle,
                   ),
                   AppTextField(
+                    errorText: signupController.emailError,
                     hintText: 'email@dominio.com',
                     padding: EdgeInsets.only(bottom: 16, top: 16),
                     onChanged: (value) {
@@ -52,6 +53,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   AppTextField(
+                    errorText: signupController.nomeError,
                     hintText: 'nome',
                     padding: EdgeInsets.only(bottom: 16),
                     onChanged: (value) {
@@ -61,6 +63,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   AppTextField(
+                    errorText: signupController.senhaError,
                     hintText: 'senha',
                     padding: EdgeInsets.only(bottom: 16),
                     obscureText: true,
@@ -71,6 +74,7 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   AppTextField(
+                    errorText: signupController.confirmarSenhaError,
                     hintText: 'confirmar senha',
                     obscureText: true,
                     onChanged: (value) {
