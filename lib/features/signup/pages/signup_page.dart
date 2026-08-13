@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_password_requirement.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
 
@@ -63,25 +64,50 @@ class _SignupPageState extends State<SignupPage> {
                     },
                   ),
                   AppTextField(
-                    errorText: signupController.senhaError,
-                    hintText: 'senha',
-                    padding: EdgeInsets.only(bottom: 16),
-                    obscureText: true,
                     onChanged: (value) {
                       setState(() {
                         signupController.setSenha(value);
                       });
                     },
+                    hintText: 'senha',
+                    padding: EdgeInsets.only(bottom: 16),
+                    obscureText: true,
                   ),
                   AppTextField(
-                    errorText: signupController.confirmarSenhaError,
-                    hintText: 'confirmar senha',
-                    obscureText: true,
                     onChanged: (value) {
                       setState(() {
                         signupController.setConfirmarSenha(value);
                       });
                     },
+                    hintText: 'confirmar senha',
+                    padding: EdgeInsets.only(bottom: 16),
+                    obscureText: true,
+                  ),
+                  SizedBox(height: 16),
+                  Column(
+                    children: [
+                      AppPasswordRequirement(
+                        label: 'Mínimo de 6 caracteres',
+                        isValid: signupController.isSenhaCaracterMinimo,
+                      ),
+                      AppPasswordRequirement(
+                        label: 'No mínimo um caracteres especial',
+                        isValid: signupController.isSenhaCaracterEspecial,
+                      ),
+                      AppPasswordRequirement(
+                        label: 'No mínimo uma letra maiuscula',
+                        isValid: signupController.isSenhaMaiusculo,
+                      ),
+                      AppPasswordRequirement(
+                        label: 'No mínimo uma letra minuscula',
+                        isValid: signupController.isSenhaMinusculo,
+                      ),
+
+                      AppPasswordRequirement(
+                        label: 'As senhas coincidem',
+                        isValid: signupController.isConfirmedSenha,
+                      ),
+                    ],
                   ),
                   Spacer(),
                   Row(

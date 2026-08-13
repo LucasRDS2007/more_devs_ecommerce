@@ -3,6 +3,9 @@ class SignupController {
   final RegExp _nameRegex = RegExp(
     r"^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$",
   );
+  final RegExp _senhaMaiuscula = RegExp(r'[A-Z]');
+  final RegExp _senhaMinuscula = RegExp(r'[a-z]');
+  final RegExp _senhaCaracterEspecial = RegExp(r'[^a-zA-Z0-9]');
   final int _caracterMinimoSenha = 6;
   String email = '';
   String nome = '';
@@ -13,8 +16,19 @@ class SignupController {
 
   bool get isEmailValid => _emailRegex.hasMatch(email.trim());
   bool get isNomeValid => _nameRegex.hasMatch(nome.trim());
-  bool get isSenhaValid => senha.trim().length >= _caracterMinimoSenha;
-  bool isConfirmedSenha = false;
+  bool get isSenhaCaracterMinimo => senha.trim().length >= _caracterMinimoSenha;
+  bool get isSenhaMaiusculo => _senhaMaiuscula.hasMatch(senha.trim());
+  bool get isSenhaMinusculo => _senhaMinuscula.hasMatch(senha.trim());
+  bool get isSenhaCaracterEspecial =>
+      _senhaCaracterEspecial.hasMatch(senha.trim());
+  bool get isConfirmedSenha =>
+      confirmarSenha.isNotEmpty && confirmarSenha == senha;
+
+  bool get isSenhaValid =>
+      isSenhaCaracterMinimo &&
+      isSenhaMaiusculo &&
+      isSenhaMinusculo &&
+      isSenhaCaracterEspecial;
 
   String? get emailError {
     if (email.trim().isEmpty || isEmailValid) return null;
@@ -29,21 +43,12 @@ class SignupController {
     return 'Nome Inválido';
   }
 
-  String? get senhaError {
-    if (senha.isEmpty || isSenhaValid) {
-      return null;
-    }
-
-    return 'Senha Inválida';
-  }
-
   String? get confirmarSenhaError {
     if (confirmarSenha.isEmpty || confirmarSenha == senha) {
-      isConfirmedSenha = true;
       return null;
     }
 
-    return 'Senhas não coincidem';
+    return 'Senhas';
   }
 
   void setEmail(String emailParam) {
@@ -63,6 +68,7 @@ class SignupController {
 
   void setConfirmarSenha(String confirmarSenhaParam) {
     confirmarSenha = confirmarSenhaParam;
+    changeActiveButton();
   }
 
   void changeActiveButton() {
