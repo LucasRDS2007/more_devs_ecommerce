@@ -30,6 +30,16 @@ class SignupController {
       isSenhaMinusculo &&
       isSenhaCaracterEspecial;
 
+  List<Map<String, bool>> getPasswordRequirements() {
+    return [
+      {'Mínimo de 6 caracteres': isSenhaCaracterMinimo},
+      {'No mínimo um caracter especial': isSenhaCaracterEspecial},
+      {'No mínimo uma letra maiscula': isSenhaMaiusculo},
+      {'No mínimo uma letra minuscula': isSenhaMinusculo},
+      {'Senhas coincidem': isConfirmedSenha},
+    ];
+  }
+
   String? get emailError {
     if (email.trim().isEmpty || isEmailValid) return null;
 

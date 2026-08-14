@@ -85,28 +85,14 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   SizedBox(height: 16),
                   Column(
+                    spacing: 8,
                     children: [
-                      AppPasswordRequirement(
-                        label: 'Mínimo de 6 caracteres',
-                        isValid: signupController.isSenhaCaracterMinimo,
-                      ),
-                      AppPasswordRequirement(
-                        label: 'No mínimo um caracteres especial',
-                        isValid: signupController.isSenhaCaracterEspecial,
-                      ),
-                      AppPasswordRequirement(
-                        label: 'No mínimo uma letra maiuscula',
-                        isValid: signupController.isSenhaMaiusculo,
-                      ),
-                      AppPasswordRequirement(
-                        label: 'No mínimo uma letra minuscula',
-                        isValid: signupController.isSenhaMinusculo,
-                      ),
-
-                      AppPasswordRequirement(
-                        label: 'As senhas coincidem',
-                        isValid: signupController.isConfirmedSenha,
-                      ),
+                      for (var requirement
+                          in signupController.getPasswordRequirements())
+                        AppPasswordRequirement(
+                          label: requirement.keys.first,
+                          isValid: requirement.values.first,
+                        ),
                     ],
                   ),
                   Spacer(),
