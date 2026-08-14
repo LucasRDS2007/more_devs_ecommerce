@@ -21,4 +21,12 @@ class AppTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle passwordRequirementValid = TextStyle(
+    color: AppColors.green,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle passwordRequirementInValid = TextStyle(
+    color: AppColors.black,
+    fontWeight: FontWeight.bold,
+  );
 }
