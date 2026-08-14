@@ -151,11 +151,7 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: 16),
                   AppElevatedButton(
                     type: ButtonType.filled,
-                    onPressed: signupController.isActiveButton
-                        ? () {
-                            print('cliquei em entrar');
-                          }
-                        : null,
+                    onPressed: signupController.isActiveButton ? () {} : null,
                     textButton: 'Continuar',
                   ),
                 ],

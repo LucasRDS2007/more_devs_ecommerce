@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
+import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
@@ -89,7 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                   Align(
                     alignment: AlignmentGeometry.centerEnd,
                     child: TextButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        Navigator.pushNamed(context, RecoverPage.route),
+                      },
                       child: Text(
                         'Esqueci minha senha',
                         style: AppTextStyle.smallBlack,
@@ -97,11 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   AppElevatedButton(
-                    onPressed: loginController.isActiveButton
-                        ? () {
-                            print('cliquei em entrar');
-                          }
-                        : null,
+                    onPressed: loginController.isActiveButton ? () {} : null,
                     type: ButtonType.filled,
                     textButton: 'Entrar',
                   ),

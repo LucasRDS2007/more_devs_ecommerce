@@ -43,14 +43,6 @@ class SignupController {
     return 'Nome Inválido';
   }
 
-  String? get confirmarSenhaError {
-    if (confirmarSenha.isEmpty || confirmarSenha == senha) {
-      return null;
-    }
-
-    return 'Senhas';
-  }
-
   void setEmail(String emailParam) {
     email = emailParam;
     changeActiveButton();
