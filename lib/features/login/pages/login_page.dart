@@ -25,6 +25,18 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
   }
 
+  Future<void> login() async {
+    setState(() {
+      loginController.isLoading = true;
+    });
+
+    await loginController.login();
+
+    setState(() {
+      loginController.isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,9 +112,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   AppElevatedButton(
-                    onPressed: loginController.isActiveButton ? () {} : null,
+                    onPressed: loginController.isActiveButton
+                        ? () => login()
+                        : null,
                     type: ButtonType.filled,
                     textButton: 'Entrar',
+                    isLoading: loginController.isLoading,
                   ),
                   SizedBox(height: 16),
                   AppElevatedButton(

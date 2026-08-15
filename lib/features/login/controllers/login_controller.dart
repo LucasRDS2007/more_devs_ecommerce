@@ -1,6 +1,9 @@
 class LoginController {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final int _caracterMinimoSenha = 6;
+
+  bool isLoading = false;
+
   String email = '';
   String senha = '';
   bool isActiveButton = false;
@@ -39,5 +42,10 @@ class LoginController {
 
   void changeActiveCheckbox() {
     isActiveCheckBox = !isActiveCheckBox;
+  }
+
+  Future<void> login() async {
+    //simula delay de uma chamada de API
+    await Future.delayed(Duration(seconds: 2));
   }
 }

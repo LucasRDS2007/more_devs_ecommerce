@@ -10,10 +10,12 @@ class AppElevatedButton extends StatelessWidget {
     required this.textButton,
     required this.type,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   final String textButton;
   final VoidCallback? onPressed;
+  final bool isLoading;
 
   final ButtonType type;
 
@@ -48,7 +50,16 @@ class AppElevatedButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: _getButtonStyle(),
-      child: Text(textButton),
+      child: isLoading
+          ? SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                color: AppColors.white,
+                strokeWidth: 3,
+              ),
+            )
+          : Text(textButton),
     );
   }
 }

@@ -1,30 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/recover/controllers/recover_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-
-class RecoverController {
-  final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-  String email = '';
-  bool isActiveButton = false;
-  bool get isEmailValid => _emailRegex.hasMatch(email.trim());
-
-  String? get emailError {
-    if (email.trim().isEmpty || isEmailValid) return null;
-
-    return 'E-mail Inválido';
-  }
-
-  void setEmail(String emailParam) {
-    email = emailParam;
-    changeActiveButton();
-  }
-
-  void changeActiveButton() {
-    isActiveButton = isEmailValid;
-  }
-}
 
 class RecoverPage extends StatefulWidget {
   const RecoverPage({super.key});
