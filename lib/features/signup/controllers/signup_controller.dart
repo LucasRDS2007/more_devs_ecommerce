@@ -13,6 +13,7 @@ class SignupController {
   String confirmarSenha = '';
   bool isActiveChecked = false;
   bool isActiveButton = false;
+  bool isLoading = false;
 
   bool get isEmailValid => _emailRegex.hasMatch(email.trim());
   bool get isNomeValid => _nameRegex.hasMatch(nome.trim());
@@ -85,5 +86,9 @@ class SignupController {
   void changeActiveCheckbox() {
     isActiveChecked = !isActiveChecked;
     changeActiveButton();
+  }
+
+  Future<void> signup() async {
+    await Future.delayed(Duration(seconds: 2));
   }
 }

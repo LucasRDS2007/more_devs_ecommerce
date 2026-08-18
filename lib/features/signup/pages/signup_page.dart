@@ -24,6 +24,18 @@ class _SignupPageState extends State<SignupPage> {
     super.initState();
   }
 
+  Future<void> signup() async {
+    setState(() {
+      signupController.isLoading = true;
+    });
+
+    await signupController.signup();
+
+    setState(() {
+      signupController.isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,8 +149,11 @@ class _SignupPageState extends State<SignupPage> {
                   SizedBox(height: 16),
                   AppElevatedButton(
                     type: ButtonType.filled,
-                    onPressed: signupController.isActiveButton ? () {} : null,
+                    onPressed: signupController.isActiveButton
+                        ? () => signup()
+                        : null,
                     textButton: 'Continuar',
+                    isLoading: signupController.isLoading,
                   ),
                 ],
               ),
