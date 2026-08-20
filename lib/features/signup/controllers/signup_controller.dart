@@ -14,6 +14,7 @@ class SignupController {
   String senha = '';
   String confirmarSenha = '';
   bool isActiveChecked = false;
+  bool? errorCheckbox;
   bool isActiveButton = false;
   bool isLoading = false;
 
@@ -53,6 +54,9 @@ class SignupController {
 
   void changeActiveCheckbox() {
     isActiveChecked = !isActiveChecked;
+    if (isActiveChecked) {
+      errorCheckbox = null;
+    }
   }
 
   Future<void> signup() async {
@@ -85,5 +89,12 @@ class SignupController {
       return 'Senhas não coincidem';
     }
     return null;
+  }
+
+  bool snackCheckError() {
+    if (!isActiveChecked) {
+      return true;
+    }
+    return false;
   }
 }

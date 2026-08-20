@@ -28,8 +28,11 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> signup() async {
     if (key.currentState!.validate()) {
-      if (!signupController.isActiveChecked) {
-        AppSnackBar.error(context, 'Termos e Politicas Inválidos.');
+      if (signupController.snackCheckError()) {
+        AppSnackBar.error(context, 'Termos e Politicas inválidas.');
+        setState(() {
+          signupController.errorCheckbox = true;
+        });
         return;
       }
       setState(() {
@@ -84,7 +87,6 @@ class _SignupPageState extends State<SignupPage> {
                       validator: (value) {
                         return signupController.validateSenha(value);
                       },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
                         setState(() {
                           signupController.setSenha(value);
@@ -98,7 +100,6 @@ class _SignupPageState extends State<SignupPage> {
                       validator: (value) {
                         return signupController.validateConfirmarSenha(value);
                       },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       onChanged: (value) {
                         setState(() {
                           signupController.setConfirmarSenha(value);
@@ -124,6 +125,7 @@ class _SignupPageState extends State<SignupPage> {
                     Row(
                       children: [
                         AppCheckbox(
+                          errorValue: signupController.errorCheckbox,
                           signupController.isActiveChecked,
                           onChanged: (value) {
                             setState(() {

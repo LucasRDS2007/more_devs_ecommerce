@@ -11,7 +11,6 @@ class AppTextField extends StatefulWidget {
     this.onChanged,
     this.validator,
     this.controller,
-    this.autovalidateMode = AutovalidateMode.onUnfocus,
   });
 
   final String hintText;
@@ -20,7 +19,6 @@ class AppTextField extends StatefulWidget {
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final TextEditingController? controller;
-  final AutovalidateMode? autovalidateMode;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -46,7 +44,7 @@ class _AppTextFieldState extends State<AppTextField> {
     return Padding(
       padding: widget.padding ?? EdgeInsets.all(0),
       child: TextFormField(
-        autovalidateMode: widget.autovalidateMode,
+        autovalidateMode: AutovalidateMode.onUnfocus,
         onChanged: widget.onChanged,
         obscureText: isObscure,
         validator: widget.validator,
