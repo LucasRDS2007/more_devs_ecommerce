@@ -19,6 +19,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   LoginController loginController = LoginController();
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   @override
   initState() {
@@ -26,9 +27,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> login() async {
-    setState(() {
-      loginController.isLoading = true;
-    });
+    if (key.currentState!.validate()) {
+      setState(() {
+        loginController.isLoading = true;
+      });
+    }
 
     await loginController.login();
 
@@ -40,118 +43,116 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: SizedBox(
-            height:
-                MediaQuery.of(context).size.height -
-                MediaQuery.of(context).padding.top -
-                MediaQuery.of(context).padding.bottom,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Spacer(),
-                  Image(
-                    image: AssetImage('assets/images/cadeado.png'),
-                    height: 150,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    '+DevsEcomm',
-                    style: AppTextStyle.tittle,
-                    textAlign: TextAlign.center,
-                  ),
-                  Spacer(flex: 2),
-                  AppTextField(
-                    errorText: loginController.emailError,
-                    hintText: 'email@dominio.com',
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setEmail(value);
-                      });
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  AppTextField(
-                    errorText: loginController.senhaError,
-                    hintText: '****************',
-                    obscureText: true,
-
-                    onChanged: (value) {
-                      setState(() {
-                        loginController.setSenha(value);
-                      });
-                    },
-                  ),
-                  Row(
-                    children: [
-                      AppCheckbox(
-                        loginController.isActiveCheckBox,
-                        onChanged: (value) {
-                          setState(() {
-                            loginController.changeActiveCheckbox();
-                          });
-                        },
-                      ),
-                      Text('Lembrar-me'),
-                    ],
-                  ),
-                  Align(
-                    alignment: AlignmentGeometry.centerEnd,
-                    child: TextButton(
-                      onPressed: () => {
-                        Navigator.pushNamed(context, RecoverPage.route),
-                      },
-                      child: Text(
-                        'Esqueci minha senha',
-                        style: AppTextStyle.smallBlack,
-                      ),
+      body: Form(
+        key: key,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height:
+                  MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  MediaQuery.of(context).padding.bottom,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Spacer(),
+                    Image(
+                      image: AssetImage('assets/images/cadeado.png'),
+                      height: 150,
                     ),
-                  ),
-                  AppElevatedButton(
-                    onPressed: loginController.isActiveButton
-                        ? () => login()
-                        : null,
-                    type: ButtonType.filled,
-                    textButton: 'Entrar',
-                    isLoading: loginController.isLoading,
-                  ),
-                  SizedBox(height: 16),
-                  AppElevatedButton(
-                    onPressed: () => {
-                      Navigator.pushNamed(context, SignupPage.route),
-                    },
-                    type: ButtonType.outlined,
-                    textButton: 'Cadastrar-se',
-                  ),
-
-                  Spacer(flex: 2),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
+                    SizedBox(height: 16),
+                    Text(
+                      '+DevsEcomm',
+                      style: AppTextStyle.tittle,
+                      textAlign: TextAlign.center,
+                    ),
+                    Spacer(flex: 2),
+                    AppTextField(
+                      controller: loginController.emailController,
+                      validator: (value) {
+                        return loginController.validateEmail(value);
+                      },
+                      hintText: 'email@dominio.com',
+                    ),
+                    SizedBox(height: 16),
+                    AppTextField(
+                      controller: loginController.senhaController,
+                      validator: (value) {
+                        return loginController.validateSenha(value);
+                      },
+                      hintText: '****************',
+                      obscureText: true,
+                    ),
+                    Row(
                       children: [
-                        TextSpan(
-                          text: 'Termos de Serviço',
-                          style: AppTextStyle.smallBlack,
-                          recognizer: TapGestureRecognizer()..onTap = () {},
+                        AppCheckbox(
+                          loginController.isActiveCheckBox,
+                          onChanged: (value) {
+                            setState(() {
+                              loginController.changeActiveCheckbox();
+                            });
+                          },
                         ),
-                        TextSpan(
-                          text: ' e ',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        TextSpan(
-                          text: 'Politicas de Privacidade',
-                          style: AppTextStyle.smallBlack,
-                          recognizer: TapGestureRecognizer()..onTap = () {},
-                        ),
+                        Text('Lembrar-me'),
                       ],
                     ),
-                  ),
-                  Spacer(),
-                ],
+                    Align(
+                      alignment: AlignmentGeometry.centerEnd,
+                      child: TextButton(
+                        onPressed: () => {
+                          Navigator.pushNamed(context, RecoverPage.route),
+                        },
+                        child: Text(
+                          'Esqueci minha senha',
+                          style: AppTextStyle.smallBlack,
+                        ),
+                      ),
+                    ),
+                    AppElevatedButton(
+                      onPressed: () {
+                        login();
+                      },
+                      type: ButtonType.filled,
+                      textButton: 'Entrar',
+                      isLoading: loginController.isLoading,
+                    ),
+                    SizedBox(height: 16),
+                    AppElevatedButton(
+                      onPressed: () => {
+                        Navigator.pushNamed(context, SignupPage.route),
+                      },
+                      type: ButtonType.outlined,
+                      textButton: 'Cadastrar-se',
+                    ),
+
+                    Spacer(flex: 2),
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Termos de Serviço',
+                            style: AppTextStyle.smallBlack,
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                          ),
+                          TextSpan(
+                            text: ' e ',
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          TextSpan(
+                            text: 'Politicas de Privacidade',
+                            style: AppTextStyle.smallBlack,
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class SignupController {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final RegExp _nameRegex = RegExp(
@@ -7,16 +9,16 @@ class SignupController {
   final RegExp _senhaMinuscula = RegExp(r'[a-z]');
   final RegExp _senhaCaracterEspecial = RegExp(r'[^a-zA-Z0-9]');
   final int _caracterMinimoSenha = 6;
-  String email = '';
-  String nome = '';
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nomeController = TextEditingController();
   String senha = '';
   String confirmarSenha = '';
   bool isActiveChecked = false;
   bool isActiveButton = false;
   bool isLoading = false;
 
-  bool get isEmailValid => _emailRegex.hasMatch(email.trim());
-  bool get isNomeValid => _nameRegex.hasMatch(nome.trim());
+  bool get isEmailValid => _emailRegex.hasMatch(emailController.text.trim());
+  bool get isNomeValid => _nameRegex.hasMatch(nomeController.text.trim());
   bool get isSenhaCaracterMinimo => senha.trim().length >= _caracterMinimoSenha;
   bool get isSenhaMaiusculo => _senhaMaiuscula.hasMatch(senha.trim());
   bool get isSenhaMinusculo => _senhaMinuscula.hasMatch(senha.trim());
@@ -41,54 +43,47 @@ class SignupController {
     ];
   }
 
-  String? get emailError {
-    if (email.trim().isEmpty || isEmailValid) return null;
-
-    return 'E-mail Inválido';
-  }
-
-  String? get nomeError {
-    if (nome.isEmpty || isNomeValid) {
-      return null;
-    }
-    return 'Nome Inválido';
-  }
-
-  void setEmail(String emailParam) {
-    email = emailParam;
-    changeActiveButton();
-  }
-
-  void setNome(String nomeParam) {
-    nome = nomeParam;
-    changeActiveButton();
-  }
-
   void setSenha(String senhaParam) {
     senha = senhaParam;
-    changeActiveButton();
   }
 
   void setConfirmarSenha(String confirmarSenhaParam) {
     confirmarSenha = confirmarSenhaParam;
-    changeActiveButton();
-  }
-
-  void changeActiveButton() {
-    isActiveButton =
-        isEmailValid &&
-        isNomeValid &&
-        isSenhaValid &&
-        isActiveChecked &&
-        isConfirmedSenha;
   }
 
   void changeActiveCheckbox() {
     isActiveChecked = !isActiveChecked;
-    changeActiveButton();
   }
 
   Future<void> signup() async {
     await Future.delayed(Duration(seconds: 2));
+  }
+
+  String? validateEmail(String? value) {
+    if (isEmailValid) {
+      return null;
+    }
+    return 'Email inválido';
+  }
+
+  String? validateNome(String? value) {
+    if (isNomeValid) {
+      return null;
+    }
+    return 'Nome invalido';
+  }
+
+  String? validateSenha(String? value) {
+    if (!isSenhaValid) {
+      return 'Falta algum requisito de senha';
+    }
+    return null;
+  }
+
+  String? validateConfirmarSenha(String? value) {
+    if (!isConfirmedSenha) {
+      return 'Senhas não coincidem';
+    }
+    return null;
   }
 }

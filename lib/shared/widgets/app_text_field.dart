@@ -9,14 +9,18 @@ class AppTextField extends StatefulWidget {
     this.padding,
     this.obscureText = false,
     this.onChanged,
-    this.errorText,
+    this.validator,
+    this.controller,
+    this.autovalidateMode = AutovalidateMode.onUnfocus,
   });
 
   final String hintText;
   final bool obscureText;
   final EdgeInsetsGeometry? padding;
   final Function(String)? onChanged;
-  final String? errorText;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -41,11 +45,13 @@ class _AppTextFieldState extends State<AppTextField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ?? EdgeInsets.all(0),
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: widget.autovalidateMode,
         onChanged: widget.onChanged,
         obscureText: isObscure,
+        validator: widget.validator,
+        controller: widget.controller,
         decoration: InputDecoration(
-          errorText: widget.errorText,
           suffixIcon: widget.obscureText
               ? IconButton(
                   onPressed: () {
