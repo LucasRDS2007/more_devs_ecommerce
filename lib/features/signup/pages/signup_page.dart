@@ -7,177 +7,152 @@ import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_password_requirement.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
+import 'package:provider/provider.dart';
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
 
   static String route = '/signup';
 
   @override
-  State<SignupPage> createState() => _SignupPageState();
-}
-
-class _SignupPageState extends State<SignupPage> {
-  SignupController signupController = SignupController();
-  final GlobalKey<FormState> key = GlobalKey<FormState>();
-
-  @override
-  initState() {
-    super.initState();
-  }
-
-  Future<void> signup() async {
-    if (key.currentState!.validate()) {
-      if (signupController.snackCheckError()) {
-        AppSnackBar.error(context, 'Termos e Politicas inválidas.');
-        setState(() {
-          signupController.errorCheckbox = true;
-        });
-        return;
-      }
-      setState(() {
-        signupController.isLoading = true;
-      });
-    }
-    await signupController.signup();
-
-    setState(() {
-      signupController.isLoading = false;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: key,
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height:
-                  MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).padding.top -
-                  MediaQuery.of(context).padding.bottom,
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  children: [
-                    Text('Criar uma conta', style: AppTextStyle.tittle),
-                    Text(
-                      'Insira seus dados para iniciar suas compras',
-                      style: AppTextStyle.subTittle,
-                    ),
-                    AppTextField(
-                      validator: (value) {
-                        return signupController.validateEmail(value);
-                      },
-                      hintText: 'email@dominio.com',
-                      padding: EdgeInsets.only(bottom: 16, top: 16),
-                      controller: signupController.emailController,
-                    ),
-                    AppTextField(
-                      validator: (value) {
-                        return signupController.validateNome(value);
-                      },
-                      hintText: 'nome',
-                      padding: EdgeInsets.only(bottom: 16),
-                      controller: signupController.nomeController,
-                    ),
-                    AppTextField(
-                      validator: (value) {
-                        return signupController.validateSenha(value);
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          signupController.setSenha(value);
-                        });
-                      },
-                      hintText: 'senha',
-                      padding: EdgeInsets.only(bottom: 16),
-                      obscureText: true,
-                    ),
-                    AppTextField(
-                      validator: (value) {
-                        return signupController.validateConfirmarSenha(value);
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          signupController.setConfirmarSenha(value);
-                        });
-                      },
-                      hintText: 'confirmar senha',
-                      padding: EdgeInsets.only(bottom: 16),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 16),
-                    Column(
-                      spacing: 8,
+      body: Consumer<SignupController>(
+        builder: (context, controller, child) {
+          return Form(
+            key: controller.key,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height:
+                      MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      MediaQuery.of(context).padding.bottom,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
                       children: [
-                        for (var requirement
-                            in signupController.getPasswordRequirements())
-                          AppPasswordRequirement(
-                            label: requirement.keys.first,
-                            isValid: requirement.values.first,
-                          ),
-                      ],
-                    ),
-                    Spacer(),
-                    Row(
-                      children: [
-                        AppCheckbox(
-                          errorValue: signupController.errorCheckbox,
-                          signupController.isActiveChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              signupController.changeActiveCheckbox();
-                            });
+                        Text('Criar uma conta', style: AppTextStyle.tittle),
+                        Text(
+                          'Insira seus dados para iniciar suas compras',
+                          style: AppTextStyle.subTittle,
+                        ),
+                        AppTextField(
+                          validator: (value) {
+                            return controller.validateEmail(value);
                           },
+                          hintText: 'email@dominio.com',
+                          padding: EdgeInsets.only(bottom: 16, top: 16),
+                          controller: controller.emailController,
                         ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text:
-                                    'Para continuar, confirme e concorde com os nossos\n',
-                                style: AppTextStyle.smallerGrey,
+                        AppTextField(
+                          validator: (value) {
+                            return controller.validateNome(value);
+                          },
+                          hintText: 'nome',
+                          padding: EdgeInsets.only(bottom: 16),
+                          controller: controller.nomeController,
+                        ),
+                        AppTextField(
+                          validator: (value) {
+                            return controller.validateSenha(value);
+                          },
+                          onChanged: (value) {
+                            controller.setSenha(value);
+                          },
+                          hintText: 'senha',
+                          padding: EdgeInsets.only(bottom: 16),
+                          obscureText: true,
+                        ),
+                        AppTextField(
+                          validator: (value) {
+                            return controller.validateConfirmarSenha(value);
+                          },
+                          onChanged: (value) {
+                            controller.setConfirmarSenha(value);
+                          },
+                          hintText: 'confirmar senha',
+                          padding: EdgeInsets.only(bottom: 16),
+                          obscureText: true,
+                        ),
+                        SizedBox(height: 16),
+                        Column(
+                          spacing: 8,
+                          children: [
+                            for (var requirement
+                                in controller.getPasswordRequirements())
+                              AppPasswordRequirement(
+                                label: requirement.keys.first,
+                                isValid: requirement.values.first,
                               ),
-                              TextSpan(
-                                text: 'Termos de Serviço',
-                                style: AppTextStyle.smallerBlack,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
+                          ],
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            AppCheckbox(
+                              errorValue: controller.errorCheckbox,
+                              controller.isActiveChecked,
+                              onChanged: (value) {
+                                controller.changeActiveCheckbox();
+                              },
+                            ),
+                            RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text:
+                                        'Para continuar, confirme e concorde com os nossos\n',
+                                    style: AppTextStyle.smallerGrey,
+                                  ),
+                                  TextSpan(
+                                    text: 'Termos de Serviço',
+                                    style: AppTextStyle.smallerBlack,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {},
+                                  ),
+                                  TextSpan(
+                                    text: ' e com a ',
+                                    style: AppTextStyle.smallerGrey,
+                                  ),
+                                  TextSpan(
+                                    text: 'Politicas de Privacidade',
+                                    style: AppTextStyle.smallerBlack,
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {},
+                                  ),
+                                ],
                               ),
-                              TextSpan(
-                                text: ' e com a ',
-                                style: AppTextStyle.smallerGrey,
-                              ),
-                              TextSpan(
-                                text: 'Politicas de Privacidade',
-                                style: AppTextStyle.smallerBlack,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {},
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        AppElevatedButton(
+                          type: ButtonType.filled,
+                          onPressed: () async {
+                            try {
+                              await controller.hadleSignup();
+                            } catch (e) {
+                              if (e is ErrorDescription) {
+                                AppSnackBar.error(
+                                  context,
+                                  'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
+                                );
+                              }
+                            }
+                          },
+                          textButton: 'Continuar',
+                          isLoading: controller.isLoading,
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
-                    AppElevatedButton(
-                      type: ButtonType.filled,
-                      onPressed: () {
-                        signup();
-                      },
-                      textButton: 'Continuar',
-                      isLoading: signupController.isLoading,
-                    ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-class SignupController {
+class SignupController extends ChangeNotifier {
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
+
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
   final RegExp _nameRegex = RegExp(
     r"^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$",
@@ -44,12 +46,31 @@ class SignupController {
     ];
   }
 
+  Future<void> hadleSignup() async {
+    if (key.currentState!.validate()) {
+      if (snackCheckError()) {
+        errorCheckbox = true;
+        notifyListeners();
+        throw ErrorDescription('not_found');
+      }
+
+      isLoading = true;
+      notifyListeners();
+    }
+    await signup();
+    notifyListeners();
+
+    isLoading = false;
+  }
+
   void setSenha(String senhaParam) {
     senha = senhaParam;
+    notifyListeners();
   }
 
   void setConfirmarSenha(String confirmarSenhaParam) {
     confirmarSenha = confirmarSenhaParam;
+    notifyListeners();
   }
 
   void changeActiveCheckbox() {
@@ -57,6 +78,7 @@ class SignupController {
     if (isActiveChecked) {
       errorCheckbox = null;
     }
+    notifyListeners();
   }
 
   Future<void> signup() async {

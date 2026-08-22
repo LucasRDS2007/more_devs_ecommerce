@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
@@ -10,18 +11,18 @@ import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+  const LoginPage({super.key});
 
   static String route = '/login';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: key,
-        child: Consumer<LoginController>(
-          builder: (context, controller, child) {
-            return SafeArea(
+      body: Consumer<LoginController>(
+        builder: (context, controller, child) {
+          return Form(
+            key: controller.key,
+            child: SafeArea(
               child: SingleChildScrollView(
                 child: SizedBox(
                   height:
@@ -68,7 +69,6 @@ class LoginPage extends StatelessWidget {
                               controller.isActiveCheckBox,
                               onChanged: (value) {
                                 controller.changeActiveCheckbox();
-                                ;
                               },
                             ),
                             Text('Lembrar-me'),
@@ -87,8 +87,11 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         AppElevatedButton(
-                          onPressed: () {
-                            controller.handleLogin();
+                          onPressed: () async {
+                            try {
+                              await controller.handleLogin();
+                              Navigator.pushNamed(context, HomePage.route);
+                            } catch (e) {}
                           },
                           type: ButtonType.filled,
                           textButton: 'Entrar',
@@ -133,9 +136,9 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
