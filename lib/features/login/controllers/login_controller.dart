@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-
-class User {
-  final String name;
-  final String email;
-
-  User({required this.name, required this.email});
-}
+import 'package:more_devs_ecommerce/features/login/model/user.dart';
+import 'package:more_devs_ecommerce/shared/exceptions/auth_exceptions.dart';
 
 class LoginController extends ChangeNotifier {
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -28,23 +23,33 @@ class LoginController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> handleLogin() async {
-    if (key.currentState!.validate()) {
-      isLoading = true;
-      notifyListeners();
+  void changeIsLoading(bool value) {
+    isLoading = value;
+    notifyListeners();
+  }
 
+  Future<void> handleLogin() async {
+    if (!key.currentState!.validate()) {
+      throw ErrorDescription('validação_incorreta');
+    }
+
+    changeIsLoading(true);
+    try {
       await login();
-      isLoading = false;
-      notifyListeners();
       emailController.clear();
       senhaController.clear();
-      return;
+    } finally {
+      changeIsLoading(false);
     }
-    throw ErrorDescription('validação_incorreta');
+    return;
   }
 
   Future<void> login() async {
     await Future.delayed(Duration(seconds: 2));
+    if (emailController.text.trim() != 'Lucas@gmail.com' ||
+        senhaController.text.trim() != '010203') {
+      throw AuthException('E-mail ou senha Incorretos');
+    }
     user = User(name: 'Lucas', email: emailController.text);
   }
 

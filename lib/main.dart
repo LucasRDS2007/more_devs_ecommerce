@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/pages/login_page.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
@@ -25,6 +26,11 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) {
             return SignupController();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return HomeController();
           },
         ),
       ],

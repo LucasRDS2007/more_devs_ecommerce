@@ -4,7 +4,9 @@ import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
+import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/exceptions/auth_exceptions.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
@@ -90,8 +92,14 @@ class LoginPage extends StatelessWidget {
                           onPressed: () async {
                             try {
                               await controller.handleLogin();
-                              Navigator.pushNamed(context, HomePage.route);
-                            } catch (e) {}
+                              if (!context.mounted) return;
+                              Navigator.popAndPushNamed(
+                                context,
+                                HomePage.route,
+                              );
+                            } on AuthException catch (e) {
+                              AppSnackBar.error(context, e.message);
+                            }
                           },
                           type: ButtonType.filled,
                           textButton: 'Entrar',
