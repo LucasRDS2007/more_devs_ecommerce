@@ -1,3 +1,6 @@
+import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
+import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
+
 final List<Map<String, dynamic>> categoriesJson = [
   {'name': 'Frutas', 'imageUrl': 'https://i.postimg.cc/SNX7hc6F/Image.png'},
   {'name': 'Verduras', 'imageUrl': 'https://i.postimg.cc/xTky2LvV/Image-1.png'},
@@ -24,13 +27,42 @@ final List<Map<String, dynamic>> productsJson = [
   {
     'brand': 'Natural da terra',
     'name': 'Cogumelo',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
     'price': 12.19,
   },
   {
     'brand': 'Natural da terra',
     'name': 'Cogumelo',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
     'price': 12.19,
   },
+];
+
+final List<Category> fakeLoadingCategories = [
+  Category(name: 'Frutas', imageUrl: ''),
+  Category(name: 'Verduras', imageUrl: ''),
+  Category(name: 'Padaria', imageUrl: ''),
+  Category(name: 'Importados', imageUrl: ''),
+];
+
+final List<Product> fakeLoadingProducts = [
+  Product(
+    brand: 'Natural da terra',
+    name: 'Rabanete',
+    imageUrl: '',
+    price: 10.99,
+  ),
+  Product(brand: 'Akatsu', name: 'Acerola', imageUrl: '', price: 7.99),
+  Product(
+    brand: 'Natural da terra',
+    name: 'Cogumelo',
+    imageUrl: '',
+    price: 12.19,
+  ),
+  Product(
+    brand: 'Natural da terra',
+    name: 'Cogumelo',
+    imageUrl: '',
+    price: 12.19,
+  ),
 ];
