@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
+import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/untils.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -12,14 +13,26 @@ class HomeProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Untils untils = Untils();
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
+      margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton.replace(
             height: 150,
-            width: 150,
-            child: Image.network(product.imageUrl.toString()),
+            replacement: Bone.square(
+              size: 150,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.red,
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  image: NetworkImage(product.imageUrl),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),

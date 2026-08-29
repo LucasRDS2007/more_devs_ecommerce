@@ -37,7 +37,7 @@ class HomeProductsSection extends StatelessWidget {
   }
 
   List<Product> _getProductsList() {
-    return controllerViewState == CategoriesViewState.loading
+    return controllerViewState == ProductsViewState.loading
         ? fakeLoadingProducts
         : controllerListProducts;
   }
