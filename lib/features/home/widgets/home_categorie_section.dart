@@ -23,7 +23,7 @@ class HomeCategorieSection extends StatelessWidget {
     return Skeletonizer(
       enabled: controllerViewState == CategoriesViewState.loading,
       child: SizedBox(
-        height: 140,
+        height: MediaQuery.of(context).size.height * 0.15,
 
         child: ListView.builder(
           itemCount: _getCategoriesList().length,

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
-import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/untils.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeProductCard extends StatelessWidget {
-  const HomeProductCard({super.key, required this.product});
+class ProductCard extends StatelessWidget {
+  const ProductCard({super.key, required this.product, this.width});
   final Product product;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +18,7 @@ class HomeProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Skeleton.replace(
+            width: width,
             height: 150,
             replacement: Bone.square(
               size: 150,
@@ -25,7 +26,6 @@ class HomeProductCard extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.red,
                 borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
                   image: NetworkImage(product.imageUrl),

@@ -12,7 +12,7 @@ class HomeCategorieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(0, 20, 20, 0),
+      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: GestureDetector(
         onTap: () {
           Navigator.pushNamed(
@@ -24,10 +24,13 @@ class HomeCategorieCard extends StatelessWidget {
         child: Column(
           children: [
             Skeleton.replace(
-              height: 80,
-              width: 80,
-              replacement: Bone.circle(size: 80),
-              child: Image.network(category.imageUrl.toString()),
+              width: 90,
+              height: 90,
+              replacement: Bone.circle(size: 90),
+              child: Image.network(
+                category.imageUrl.toString(),
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),

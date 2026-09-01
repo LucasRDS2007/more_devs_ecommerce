@@ -9,19 +9,22 @@ class AppSectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(title, style: AppTextStyle.tittle),
-        SizedBox(width: 10),
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(100),
-            color: AppColors.grey100,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          Text(title, style: AppTextStyle.tittle),
+          SizedBox(width: 10),
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: AppColors.grey100,
+            ),
+            child: Icon(Icons.arrow_forward_ios, size: 12),
           ),
-          child: Icon(Icons.arrow_forward_ios, size: 12),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

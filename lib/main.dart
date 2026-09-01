@@ -44,7 +44,7 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           routes: AppRoutes.routes,
-          initialRoute: HomePage.route,
+          initialRoute: LoginPage.route,
         );
       },
     );

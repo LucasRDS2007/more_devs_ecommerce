@@ -31,17 +31,17 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Consumer<LoginController>(
-      //     builder: (context, loginController, child) {
-      //       return Text(
-      //         'Olá, ${loginController.user!.name}',
-      //         style: AppTextStyle.tittle,
-      //       );
-      //     },
-      //   ),
-      //   actions: [Icon(Icons.shopping_cart_outlined)],
-      // ),
+      appBar: AppBar(
+        title: Consumer<LoginController>(
+          builder: (context, loginController, child) {
+            return Text(
+              'Olá, ${loginController.user!.name}',
+              style: AppTextStyle.tittle,
+            );
+          },
+        ),
+        actions: [Icon(Icons.shopping_cart_outlined)],
+      ),
       body: Consumer<HomeController>(
         builder: (context, homeController, child) {
           return SafeArea(
@@ -66,6 +66,7 @@ class _HomePageState extends State<HomePage> {
                 HomeProductsSection(
                   controllerListProducts: homeController.products,
                   controllerViewState: homeController.productsState,
+                  size: 150,
                 ),
 
                 //Produtos

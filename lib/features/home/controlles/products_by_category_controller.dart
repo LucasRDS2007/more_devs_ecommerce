@@ -1,46 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
-import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/mocks.dart';
 
 class ProductsByCategoryController extends ChangeNotifier {
-  List<Category> categories = [];
-  List<Product> products = [];
+  List<Product> categoryProducts = [];
+  List<Product> searchProducts = [];
 
-  CategoriesViewState categoriesState = CategoriesViewState.loading;
   ProductsViewState productsState = ProductsViewState.loading;
-
-  void changeCategoriesState(CategoriesViewState state) {
-    categoriesState = state;
-    notifyListeners();
-  }
 
   void changeProductsState(ProductsViewState state) {
     productsState = state;
     notifyListeners();
   }
 
-  Future<void> getCategories() async {
-    changeCategoriesState(CategoriesViewState.loading);
-    await Future.delayed(Duration(seconds: 3));
+  Future<void> getProducts(String category) async {
+    changeProductsState(ProductsViewState.loading);
+    await Future.delayed(const Duration(seconds: 2));
     try {
-      categories = categoriesJson.map((item) {
-        return Category.fromJson(item);
-      }).toList();
+      categoryProducts = productsJson
+          .where((item) {
+            return item['category'].toString().toLowerCase() ==
+                category.toLowerCase();
+          })
+          .map((item) {
+            return Product.fromJson(item);
+          })
+          .toList();
 
-      changeCategoriesState(CategoriesViewState.sucess);
+      searchProducts = List.from(categoryProducts);
+      changeProductsState(ProductsViewState.sucess);
     } catch (e) {
-      changeCategoriesState(CategoriesViewState.error);
+      changeProductsState(ProductsViewState.error);
     }
   }
 
-  Future<void> getProducts() async {
-    changeProductsState(ProductsViewState.loading);
-    await Future.delayed(Duration(seconds: 3));
+  void search(String value) {
     try {
-      products = productsJson.map((item) {
-        return Product.fromJson(item);
+      searchProducts = categoryProducts.where((item) {
+        return item.name.toLowerCase().toString().contains(value.toLowerCase());
       }).toList();
       changeProductsState(ProductsViewState.sucess);
     } catch (e) {
