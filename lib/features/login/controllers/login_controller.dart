@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/login/model/user.dart';
+import 'package:more_devs_ecommerce/features/login/models/user.dart';
 import 'package:more_devs_ecommerce/shared/exceptions/auth_exceptions.dart';
 
 class LoginController extends ChangeNotifier {
