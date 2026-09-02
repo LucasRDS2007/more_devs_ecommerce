@@ -1,96 +1,160 @@
 # 🛒 More Devs E-commerce
 
-Um projeto **contínuo e evolutivo de e-commerce desenvolvido em Flutter**, criado com o objetivo de colocar em prática e aprimorar conhecimentos no desenvolvimento de aplicações mobile.
+Aplicativo de e-commerce desenvolvido em **Flutter** e **Dart**, criado como projeto de estudo durante o curso **+DEVS2BLU**.
 
-A ideia do projeto é acompanhar a evolução do aprendizado em Flutter: novas funcionalidades, melhorias de arquitetura e novos conceitos serão incorporados conforme o conhecimento e a experiência com o framework forem aumentando.
+O projeto acompanha a evolução dos conhecimentos em desenvolvimento mobile, colocando em prática conceitos de arquitetura, gerenciamento de estado, componentização, navegação e organização de código.
+
+> **Status:** em desenvolvimento. Atualmente, a aplicação utiliza **dados mockados localmente**, sem integração com API, banco de dados ou autenticação real de usuários.
 
 ## 📱 Sobre o projeto
 
-O **More Devs E-commerce** começou como uma aplicação simples e está sendo desenvolvido gradualmente, permitindo experimentar diferentes conceitos e boas práticas do ecossistema Flutter.
+O More Devs E-commerce começou como uma aplicação simples e vem evoluindo gradualmente para uma estrutura de e-commerce mais completa.
 
-Atualmente, o projeto conta com:
+Atualmente, a aplicação possui:
 
-- 🔐 Página de login
-- 📝 Página de cadastro
-- 🧩 Componentização de widgets
-- 🏗️ Separação entre camadas de **View** e **Controller**
-- 🔄 Gerenciamento e controle de estados
-- 📐 Organização e reutilização de componentes
-- 📚 Aplicação prática de conceitos aprendidos durante os estudos
+* Login e cadastro de usuários *(apenas fluxo visual, sem autenticação real)*
+* Recuperação de senha *(apenas fluxo visual)*
+* Página inicial
+* Exibição de produtos
+* Categorias de produtos
+* Listagem de produtos por categoria
+* Carrosséis
+* Componentização de widgets
+* Gerenciamento de estado
+* Sistema de rotas centralizado
+* Tratamento de exceções
+* Sistema de SnackBars customizado
+* Skeleton loading
+* Tema e estilos compartilhados
+* Ícone personalizado do aplicativo
+* Splash Screen personalizada
 
-O projeto não possui como objetivo ser uma aplicação finalizada, mas sim servir como um **laboratório de aprendizado**, evoluindo constantemente junto com o conhecimento adquirido.
+Os produtos, categorias, carrosséis e demais informações utilizadas pela aplicação são atualmente **mockados**. A integração com uma API e a implementação de autenticação e persistência de usuários fazem parte da evolução futura do projeto.
 
-## 🚀 Tecnologias
+## 🛠️ Tecnologias e bibliotecas
 
-- **Flutter**
-- **Dart**
+### Base
 
-Novas tecnologias, bibliotecas e padrões poderão ser adicionados ao projeto conforme sua evolução.
+* **Flutter**
+* **Dart**
+
+### Pacotes
+
+* `provider` — gerenciamento de estado
+* `carousel_slider` — carrosséis
+* `smooth_page_indicator` — indicadores de páginas
+* `skeletonizer` — estados de carregamento
+* `animated_snack_bar` — feedback visual através de SnackBars
+* `intl` — formatação e internacionalização
+
+### Ferramentas de interface
+
+* `flutter_launcher_icons` — geração do ícone do aplicativo
+* `flutter_native_splash` — configuração da tela de abertura
 
 ## 🏗️ Arquitetura
 
-A aplicação utiliza uma organização baseada em **features**, separando cada funcionalidade da aplicação em seu próprio módulo. Além disso, componentes e recursos compartilhados entre as funcionalidades ficam centralizados na camada `shared`.
+O projeto utiliza uma organização baseada em **features**, mantendo cada funcionalidade agrupada em seu próprio módulo.
 
-A estrutura atual do projeto é:
+Recursos utilizados por diferentes partes da aplicação ficam centralizados em `shared`.
+
+Estrutura atual:
 
 ```text
 lib/
 ├── features/
+│   ├── home/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── pages/
+│   │   └── widgets/
+│   │
 │   ├── login/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── pages/
+│   │
+│   ├── recover/
 │   │   ├── controllers/
 │   │   └── pages/
 │   │
 │   └── signup/
+│       ├── controllers/
+│       └── pages/
 │
-└── shared/
-    ├── widgets/
-    ├── app_border.dart
-    ├── app_colors.dart
-    └── app_text_style.dart
+├── shared/
+│   ├── exceptions/
+│   ├── widgets/
+│   ├── app_border.dart
+│   ├── app_colors.dart
+│   ├── app_snack_bar.dart
+│   ├── app_text_style.dart
+│   ├── enums.dart
+│   ├── mocks.dart
+│   └── utils.dart
+│
+├── main.dart
+└── routes.dart
 ```
 
 ### Features
 
-Cada funcionalidade possui sua própria estrutura e responsabilidades. Atualmente, o projeto conta com as seguintes features:
+#### `home`
 
-- `login` — fluxo de autenticação e página de login
-- `signup` — fluxo de cadastro de usuários
+Responsável pela área principal do e-commerce, incluindo produtos, categorias, carrosséis e listagem de produtos por categoria.
 
-### Shared
+#### `login`
 
-A pasta `shared` concentra recursos reutilizáveis em diferentes partes da aplicação, evitando duplicação e facilitando a manutenção.
+Responsável pelo fluxo de login e sua interface.
 
-Atualmente, ela contém:
+#### `signup`
 
-- **`widgets/`** — componentes reutilizáveis da interface
-- **`app_border.dart`** — configurações e estilos de bordas
-- **`app_colors.dart`** — definição das cores utilizadas na aplicação
-- **`app_text_style.dart`** — estilos de texto utilizados na interface
+Responsável pelo fluxo de cadastro de usuários.
 
-Essa estrutura permite que o projeto cresça de forma organizada, mantendo cada funcionalidade isolada e facilitando a manutenção e evolução do código.
+#### `recover`
 
-## 🎯 Objetivos
+Responsável pelo fluxo de recuperação de acesso.
 
-O principal objetivo do projeto é utilizar o desenvolvimento de um aplicativo real como forma de aprendizado prático.
+### `shared`
 
-Entre os objetivos estão:
+Concentra elementos reutilizáveis entre diferentes funcionalidades, como widgets, exceções, estilos, cores, enums, mocks e funções utilitárias.
 
-- Aprimorar conhecimentos em Flutter e Dart
-- Praticar gerenciamento de estados
-- Desenvolver componentes reutilizáveis
-- Melhorar a organização e arquitetura do código
-- Aprender e aplicar boas práticas de desenvolvimento
-- Experimentar novas ferramentas e bibliotecas
-- Evoluir gradualmente a aplicação com novas funcionalidades
+## 🧭 Navegação
+
+As rotas da aplicação são centralizadas em `routes.dart`, organizando a navegação entre as principais funcionalidades:
+
+* Login
+* Cadastro
+* Recuperação de senha
+* Home
+* Produtos por categoria
+
+## 🎯 Objetivos do projeto
+
+O principal objetivo é utilizar o desenvolvimento de uma aplicação real como ferramenta de aprendizado.
+
+Entre os objetivos:
+
+* Aprimorar conhecimentos em Flutter e Dart
+* Praticar gerenciamento de estado
+* Aplicar arquitetura baseada em features
+* Desenvolver componentes reutilizáveis
+* Trabalhar com navegação entre telas
+* Praticar separação de responsabilidades
+* Implementar tratamento de erros e exceções
+* Trabalhar com estados de carregamento
+* Experimentar diferentes bibliotecas do ecossistema Flutter
+* Evoluir gradualmente a aplicação
+* Futuramente integrar uma API e substituir os dados mockados por dados reais
 
 ## 📚 Aprendizado contínuo
 
-Este projeto representa uma jornada de aprendizado. Cada nova funcionalidade é uma oportunidade para estudar um conceito, testar uma abordagem diferente e melhorar a qualidade do código.
+O projeto está em constante evolução.
 
-Por isso, o projeto estará em **constante evolução**, acompanhando o desenvolvimento das habilidades em Flutter.
+Novas funcionalidades, melhorias de arquitetura e novas tecnologias serão incorporadas conforme novos conceitos forem estudados.
 
----
+A ideia é que o código acompanhe essa evolução, servindo não apenas como uma aplicação de e-commerce, mas também como um registro prático do aprendizado em Flutter.
 
-### 👨‍💻 +DEVS2BLU
+## 👨‍💻 +DEVS2BLU
 
-Projeto desenvolvido para estudos e evolução contínua no desenvolvimento com **Flutter**. Durante o curso do +DEVS2BLU.
+Projeto desenvolvido para estudos e evolução contínua no desenvolvimento com Flutter durante o curso **+DEVS2BLU**.
