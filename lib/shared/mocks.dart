@@ -112,6 +112,18 @@ final List<Map<String, dynamic>> productsJson = [
     'category': 'Importados',
   },
 ];
+
+final List<Map<String, dynamic>> carouselJson = [
+  {
+    'title': 'Aproveite as ofertas',
+    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
+  },
+  {
+    'title': 'Experimente agora!',
+    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+  },
+];
+
 final List<Category> fakeLoadingCategories = [
   Category(name: 'Frutas', imageUrl: 'https://i.postimg.cc/BQMWr9B8/Image.png'),
   Category(

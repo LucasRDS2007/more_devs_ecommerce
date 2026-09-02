@@ -21,6 +21,11 @@ class AppTextStyle {
     fontSize: 16,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle carouselLabel = TextStyle(
+    color: AppColors.black,
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+  );
   static TextStyle passwordRequirementValid = TextStyle(
     color: AppColors.green,
     fontWeight: FontWeight.bold,

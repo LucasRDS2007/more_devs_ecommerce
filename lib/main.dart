@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controlles/products_by_category_controller.dart';
-import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/pages/login_page.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';

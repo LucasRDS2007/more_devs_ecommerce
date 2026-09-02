@@ -4,6 +4,7 @@ import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,8 @@ class _HomePageState extends State<HomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<HomeController>()
         ..getCategories()
-        ..getProducts();
+        ..getProducts()
+        ..getCarouselItens();
     });
   }
 
@@ -47,16 +49,21 @@ class _HomePageState extends State<HomePage> {
           return SafeArea(
             child: Column(
               children: [
-                AppElevatedButton(
-                  textButton: 'textButton',
-                  type: ButtonType.filled,
-                  onPressed: () {
-                    homeController.getCategories();
-                    homeController.getProducts();
-                  },
+                // AppElevatedButton(
+                //   textButton: 'textButton',
+                //   type: ButtonType.filled,
+                //   onPressed: () {
+                //     homeController.getCategories();
+                //     homeController.getCarouselItens();
+                //     homeController.getProducts();
+                //   },
+                // ),
+                AppCarousel(
+                  controllerChangeIndex: homeController.changeCarouselIndex,
+                  controllerIndex: homeController.activeIndex,
+                  controllerCarouselViewState: homeController.carouselState,
+                  controllerCarouselItens: homeController.carouselItens,
                 ),
-
-                //Carrossel
                 AppSectionTitle(title: 'Categorias'),
                 HomeCategorieSection(
                   controllerViewState: homeController.categoriesState,
