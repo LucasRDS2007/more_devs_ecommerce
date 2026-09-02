@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/recover/controllers/recover_controller.dart';
-import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 
 class RecoverPage extends StatefulWidget {
   const RecoverPage({super.key});
@@ -49,10 +49,12 @@ class _RecoverPageState extends State<RecoverPage> {
                     type: ButtonType.filled,
                     onPressed: recoverController.isActiveButton
                         ? () {
-                            AppSnackBar.success(
-                              context,
+                            AnimatedSnackBar.material(
                               'Código enviado com sucesso',
-                            );
+                              type: AnimatedSnackBarType.success,
+                              mobileSnackBarPosition:
+                                  MobileSnackBarPosition.bottom,
+                            ).show(context);
                           }
                         : null,
                   ),

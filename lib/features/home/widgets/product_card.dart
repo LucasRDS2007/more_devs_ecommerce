@@ -19,9 +19,9 @@ class ProductCard extends StatelessWidget {
         children: [
           Skeleton.replace(
             width: width,
-            height: 150,
+            height: 160,
             replacement: Bone.square(
-              size: 150,
+              size: 160,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Container(
@@ -35,7 +35,7 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 5),
             child: Text(
               product.brand.toString(),
               style: AppTextStyle.smallGrey,

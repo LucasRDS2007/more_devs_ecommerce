@@ -34,7 +34,7 @@ class ProductsByCategorySection extends StatelessWidget {
             },
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,
-              mainAxisExtent: 260,
+              mainAxisExtent: 265,
               crossAxisSpacing: 0,
             ),
           ),

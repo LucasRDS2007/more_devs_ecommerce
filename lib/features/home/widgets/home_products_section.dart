@@ -19,12 +19,12 @@ class HomeProductsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controllerViewState == ProductsViewState.error) {
-      return Text('Problema ao resgatar produtos');
+      return Text('Problema ao exibir carrossel');
     }
     return Skeletonizer(
       enabled: controllerViewState == ProductsViewState.loading,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.28,
+        height: MediaQuery.of(context).size.height * 0.3,
         child: ListView.builder(
           itemCount: _getProductsList().length,
           scrollDirection: Axis.horizontal,
