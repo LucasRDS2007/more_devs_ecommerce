@@ -8,4 +8,5 @@ class AppColors {
   static const Color grey50 = Color(0xFFe0e5e8);
   static const Color green = Color(0xFF009600);
   static const Color red = Colors.red;
+  static final Color blur = Colors.black.withValues(alpha: 0.5);
 }
