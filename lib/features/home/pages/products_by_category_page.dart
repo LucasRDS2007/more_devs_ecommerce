@@ -5,11 +5,7 @@ import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
-// final List<DropdownMenuItem<String>> items = [
-//   const DropdownMenuItem(value: 'Aka', child: Text('Akatsu')),
-//   const DropdownMenuItem(value: 'Ere', child: Text('Erepa')),
-//   const DropdownMenuItem(value: 'Pop', child: Text('Popuap')),
-// ];
+import '../../../shared/widgets/app_border.dart';
 
 class ProductsByCategoryPage extends StatefulWidget {
   const ProductsByCategoryPage({super.key, required this.categoryName});
@@ -26,7 +22,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(((timeStamp) {
-      context.read<ProductsByCategoryController>().getProducts(
+      context.read<ProductsByCategoryController>().getProductsByCategory(
         widget.categoryName,
       );
     }));
@@ -49,27 +45,23 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
                 child: AppTextField(
                   hintText: 'Rabanete',
                   onChanged: (value) {
-                    controller.search(value);
+                    controller.setSearchQuery(value);
                   },
                 ),
               ),
+              SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: DropdownButtonFormField(
-                  items: [
-                    DropdownMenuItem(child: Text('Toda as Marcas')),
-                    ...controller.brandsProducts.map(
-                      (item) =>
-                          DropdownMenuItem(value: item, child: Text(item)),
-                    ),
-                  ],
+                child: AppDropdownButtonFormField(
+                  selectedBrand: controller.selectedBrand,
+                  brandsProducts: controller.brandsProducts,
                   onChanged: (value) {
-                    controller.setSelectedBrand(value);
+                    controller.setSelectedBrand(value ?? '');
                   },
                 ),
               ),
               ProductsByCategorySection(
-                controllerListProducts: controller.searchProducts,
+                controllerListProducts: controller.filteredProducts,
                 controllerViewState: controller.productsState,
                 categoryName: widget.categoryName,
               ),
