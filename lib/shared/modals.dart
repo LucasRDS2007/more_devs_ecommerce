@@ -4,7 +4,7 @@ import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 
 class Modals {
-  Future<dynamic> AppBottomSheet(context, Product product) {
+  Future<dynamic> appBottomSheet(context, Product product) {
     return showModalBottomSheet(
       isScrollControlled: true,
 

@@ -16,7 +16,7 @@ class ProductCard extends StatelessWidget {
     Untils untils = Untils();
     return GestureDetector(
       onTap: () {
-        modals.AppBottomSheet(context, product);
+        modals.appBottomSheet(context, product);
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),

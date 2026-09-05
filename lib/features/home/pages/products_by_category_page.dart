@@ -5,6 +5,12 @@ import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
+// final List<DropdownMenuItem<String>> items = [
+//   const DropdownMenuItem(value: 'Aka', child: Text('Akatsu')),
+//   const DropdownMenuItem(value: 'Ere', child: Text('Erepa')),
+//   const DropdownMenuItem(value: 'Pop', child: Text('Popuap')),
+// ];
+
 class ProductsByCategoryPage extends StatefulWidget {
   const ProductsByCategoryPage({super.key, required this.categoryName});
 
@@ -32,7 +38,6 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
       appBar: AppBar(
         title: Text(widget.categoryName, style: AppTextStyle.tittle),
         centerTitle: true,
-        automaticallyImplyLeading: false,
         actions: [Icon(Icons.shopping_cart_outlined)],
       ),
       body: Consumer<ProductsByCategoryController>(
@@ -45,6 +50,21 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
                   hintText: 'Rabanete',
                   onChanged: (value) {
                     controller.search(value);
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: DropdownButtonFormField(
+                  items: [
+                    DropdownMenuItem(child: Text('Toda as Marcas')),
+                    ...controller.brandsProducts.map(
+                      (item) =>
+                          DropdownMenuItem(value: item, child: Text(item)),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    controller.setSelectedBrand(value);
                   },
                 ),
               ),
