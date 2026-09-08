@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
+import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 // import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +38,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.power_settings_new),
+          onPressed: () {
+            showDialog(context: context, builder: (_) => AppExitDialog());
+          },
+        ),
+        centerTitle: true,
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
             return Text(

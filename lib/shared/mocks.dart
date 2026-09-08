@@ -122,6 +122,10 @@ final List<Map<String, dynamic>> carouselJson = [
     'title': 'Experimente agora!',
     'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
   },
+  {
+    'title': 'Compre Compre Compre!',
+    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
+  },
 ];
 
 final List<Category> fakeLoadingCategories = [

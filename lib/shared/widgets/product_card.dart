@@ -3,6 +3,7 @@ import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/shared/untils.dart';
+import 'package:more_devs_ecommerce/shared/widgets/modal_product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class ProductCard extends StatelessWidget {
     Untils untils = Untils();
     return GestureDetector(
       onTap: () {
-        modals.appBottomSheet(context, product);
+        modals.appBottomSheet(context, ModalProductCard(product: product));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
