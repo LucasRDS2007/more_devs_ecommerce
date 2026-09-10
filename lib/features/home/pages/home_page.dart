@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
@@ -50,7 +51,14 @@ class _HomePageState extends State<HomePage> {
             );
           },
         ),
-        actions: [Icon(Icons.shopping_cart_outlined)],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, CartPage.route);
+            },
+          ),
+        ],
       ),
       body: Consumer<HomeController>(
         builder: (context, homeController, child) {

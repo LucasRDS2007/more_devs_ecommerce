@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
@@ -37,6 +38,11 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) {
             return ProductsByCategoryController();
+          },
+        ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return CartController();
           },
         ),
       ],
