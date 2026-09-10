@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/home/controlles/products_by_category_controller.dart';
+import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';

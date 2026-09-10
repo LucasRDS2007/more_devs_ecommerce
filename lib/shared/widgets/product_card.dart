@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
-import 'package:more_devs_ecommerce/shared/untils.dart';
+import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/modal_product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 

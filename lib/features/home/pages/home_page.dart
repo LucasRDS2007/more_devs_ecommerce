@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
+import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
-import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 // import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';

@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/home/controlles/home_controller.dart';
+import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/models/carousel_models.dart';
 import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
@@ -37,6 +37,9 @@ class AppCarousel extends StatelessWidget {
                 height: 195.0,
                 viewportFraction: 1.0,
                 enableInfiniteScroll: false,
+                autoPlay: true,
+                autoPlayAnimationDuration: Duration(seconds: 1),
+                autoPlayInterval: Duration(seconds: 5),
                 onPageChanged: (index, reason) {
                   controllerChangeIndex(index);
                 },
