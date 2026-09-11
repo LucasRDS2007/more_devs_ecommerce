@@ -16,6 +16,7 @@ _(o que quebra ou não funciona ao usar o app — descreva o problema e, se poss
 ### 1. Lista de requisitos de senha sempre com ícone de "check"
 
 ![alt text](bug1-senha-requisitos.png)
+![alt text](image.png)
 
 Na tela de **Cadastro**, todos os itens da lista de requisitos usam sempre o mesmo ícone `Icons.check_circle`. Um requisito **não atendido** continua mostrando um ✓ (só muda a cor para cinza), passando a impressão de que já foi cumprido — deveria ser um círculo vazio / "X". Além disso os rótulos têm erros de português: "maiscula", "minuscula", "caracter" (→ maiúscula, minúscula, caractere).
 _Reproduzir:_ abrir Cadastro e digitar uma senha fraca (ex.: `abc`) — os itens seguem com o ✓.
