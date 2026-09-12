@@ -14,7 +14,7 @@ class AppProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Modals modals = Modals();
-    Untils untils = Untils();
+    Utils untils = Utils();
     return GestureDetector(
       onTap: () {
         modals.appBottomSheet(context, AppModalProductCard(product: product));

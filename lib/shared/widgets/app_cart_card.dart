@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 
 class AppCartCard extends StatelessWidget {
@@ -17,11 +18,12 @@ class AppCartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Utils utils = Utils();
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Container(
         padding: EdgeInsets.all(10),
-        height: 130,
+        height: 150,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.black, width: 2),
@@ -33,13 +35,11 @@ class AppCartCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                height: 130,
+                height: 150,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: NetworkImage(
-                      'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-                    ),
+                    image: NetworkImage(productCart.imageUrl),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -54,17 +54,31 @@ class AppCartCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Produto', style: AppTextStyle.smallBlackBlold),
-                          Text('Marca', style: AppTextStyle.smallGreyBlold),
-                        ],
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              productCart.name,
+                              style: AppTextStyle.smallBlackBlold,
+                            ),
+                            Text(
+                              productCart.brand,
+                              style: AppTextStyle.smallGreyBlold,
+                            ),
+                          ],
+                        ),
                       ),
-                      Text('RS 99,50', style: AppTextStyle.price),
+                      Flexible(
+                        child: Text(
+                          utils.formatCurrency(productCart.price),
+                          style: AppTextStyle.subPrice,
+                        ),
+                      ),
                     ],
                   ),
                   AppQuantitySelector(
+                    productCart: productCart,
                     increment: increment,
                     decrement: decrement,
                   ),

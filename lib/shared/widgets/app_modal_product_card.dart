@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 
 class AppModalProductCard extends StatelessWidget {
@@ -66,6 +65,7 @@ class AppModalProductCard extends StatelessWidget {
                     child: AppQuantitySelector(
                       increment: () {},
                       decrement: () {},
+                      productCart: ,
                     ),
                   ),
                 ],

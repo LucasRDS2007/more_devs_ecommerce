@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_cart_product_card.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_cart_card.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_total_checkout_section.dart';
 import 'package:provider/provider.dart';
 
@@ -37,8 +37,6 @@ class CartPage extends StatelessWidget {
                     },
                   ),
                 ),
-                // AppCartProductCard(),
-                Spacer(),
                 AppTotalCheckoutSection(onPressed: () {}, total: 'RS 99,50'),
               ],
             );
