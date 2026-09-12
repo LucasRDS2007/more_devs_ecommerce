@@ -19,7 +19,7 @@ class Product {
       name: json['name'],
       imageUrl: json['imageUrl'],
       price: json['price'],
-      category: 'category',
+      category: json['category'],
     );
   }
 }

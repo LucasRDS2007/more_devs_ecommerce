@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
-import 'package:more_devs_ecommerce/shared/app_colors.dart';
+import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_cart_product_card.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_total_checkout_section.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -22,28 +23,23 @@ class CartPage extends StatelessWidget {
           builder: (context, cartController, child) {
             return Column(
               children: [
-                // ListView(),
-                Spacer(),
-                Container(
-                  height: 1,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  decoration: BoxDecoration(
-                    color: AppColors.black,
-                    borderRadius: BorderRadius.circular(100),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: cartController.productCartList.length,
+                    itemBuilder: (context, index) {
+                      ProductCart productCart =
+                          cartController.productCartList[index];
+                      return AppCartCard(
+                        productCart: productCart,
+                        decrement: () {},
+                        increment: () {},
+                      );
+                    },
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(child: Text('RS 99,50')),
-                    Expanded(
-                      child: AppElevatedButton(
-                        textButton: 'Continuar',
-                        type: ButtonType.filled,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
+                // AppCartProductCard(),
+                Spacer(),
+                AppTotalCheckoutSection(onPressed: () {}, total: 'RS 99,50'),
               ],
             );
           },

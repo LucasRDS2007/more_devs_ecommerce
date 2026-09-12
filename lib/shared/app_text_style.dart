@@ -4,14 +4,27 @@ import 'app_colors.dart';
 
 class AppTextStyle {
   static TextStyle smallBlack = TextStyle(color: AppColors.black);
+  static TextStyle smallBlackBlold = TextStyle(
+    color: AppColors.black,
+    fontWeight: FontWeight.bold,
+  );
   static TextStyle smallerBlack = TextStyle(
     color: AppColors.black,
     fontSize: 12,
   );
   static TextStyle smallGrey = TextStyle(color: AppColors.grey);
+  static TextStyle smallGreyBlold = TextStyle(
+    color: AppColors.grey,
+    fontWeight: FontWeight.bold,
+  );
   static TextStyle smallerGrey = TextStyle(color: AppColors.grey, fontSize: 12);
   static TextStyle tittle = TextStyle(
     color: AppColors.black,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle tittleGrey = TextStyle(
+    color: AppColors.grey,
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
@@ -32,6 +45,11 @@ class AppTextStyle {
   );
   static TextStyle passwordRequirementInValid = TextStyle(
     color: AppColors.grey,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle price = TextStyle(
+    color: AppColors.black,
+    fontSize: 24,
     fontWeight: FontWeight.bold,
   );
 }

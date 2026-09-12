@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
-import 'package:more_devs_ecommerce/shared/widgets/product_card.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_product_card.dart';
 import 'package:more_devs_ecommerce/shared/mocks.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -30,7 +30,7 @@ class HomeProductsSection extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             Product product = _getProductsList()[index];
-            return ProductCard(product: product, width: size);
+            return AppProductCard(product: product, width: size);
           },
         ),
       ),

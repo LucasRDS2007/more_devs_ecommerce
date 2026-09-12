@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 
-class ModalProductCard extends StatelessWidget {
-  const ModalProductCard({super.key, required this.product});
+class AppModalProductCard extends StatelessWidget {
+  const AppModalProductCard({super.key, required this.product});
 
   final Product product;
 
@@ -42,15 +44,38 @@ class ModalProductCard extends StatelessWidget {
               'A acerola é uma fruta tropical conhecida pelo seu sabor refrescante, levemente ácido e naturalmente adocicado. Rica em vitamina C e muito versátil, pode ser consumida in natura, utilizada em sucos, vitaminas, sobremesas e diversas receitas.Ideal para quem busca uma opção saborosa e nutritiva para o dia a dia. Produto selecionado para garantir qualidade, frescor e sabor.',
             ),
             const SizedBox(height: 10),
-            Text('R\$${product.price.toString()}', style: AppTextStyle.tittle),
+            Text('R\$${product.price.toString()}', style: AppTextStyle.price),
             const SizedBox(height: 10),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(bottom: 16),
-              child: AppElevatedButton(
-                type: ButtonType.filled,
-                textButton: 'Adicionar ao carrinho',
-                onPressed: null,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, CartPage.route);
+                      },
+                      child: Text(
+                        'No Carrinho',
+                        style: AppTextStyle.tittleGrey,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: AppQuantitySelector(
+                      increment: () {},
+                      decrement: () {},
+                    ),
+                  ),
+                ],
               ),
+
+              // AppElevatedButton(
+              //   type: ButtonType.filled,
+              //   textButton: 'Adicionar ao carrinho',
+              //   onPressed: null,
+              // ),
             ),
           ],
         ),

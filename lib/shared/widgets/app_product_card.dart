@@ -3,11 +3,11 @@ import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/shared/utils.dart';
-import 'package:more_devs_ecommerce/shared/widgets/modal_product_card.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_modal_product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.product, this.width});
+class AppProductCard extends StatelessWidget {
+  const AppProductCard({super.key, required this.product, this.width});
   final Product product;
   final double? width;
 
@@ -17,7 +17,7 @@ class ProductCard extends StatelessWidget {
     Untils untils = Untils();
     return GestureDetector(
       onTap: () {
-        modals.appBottomSheet(context, ModalProductCard(product: product));
+        modals.appBottomSheet(context, AppModalProductCard(product: product));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
