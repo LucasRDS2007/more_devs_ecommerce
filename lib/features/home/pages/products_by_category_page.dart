@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
@@ -34,7 +35,14 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
       appBar: AppBar(
         title: Text(widget.categoryName, style: AppTextStyle.tittle),
         centerTitle: true,
-        actions: [Icon(Icons.shopping_cart_outlined)],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, CartPage.route);
+            },
+          ),
+        ],
       ),
       body: Consumer<ProductsByCategoryController>(
         builder: (context, controller, child) {

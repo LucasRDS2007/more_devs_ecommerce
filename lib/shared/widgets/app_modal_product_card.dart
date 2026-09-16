@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
+import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
+import 'package:provider/provider.dart';
 
 class AppModalProductCard extends StatelessWidget {
   const AppModalProductCard({super.key, required this.product});
@@ -47,35 +51,58 @@ class AppModalProductCard extends StatelessWidget {
             const SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(bottom: 16),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, CartPage.route);
-                      },
-                      child: Text(
-                        'No Carrinho',
-                        style: AppTextStyle.tittleGrey,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: AppQuantitySelector(
-                      increment: () {},
-                      decrement: () {},
-                      productCart: ,
-                    ),
-                  ),
-                ],
+              child: Consumer<CartController>(
+                builder: (context, cartController, child) {
+                  int quantity = cartController.getQuantity(product);
+                  ProductCart? productCart = cartController.validationProduct(
+                    product,
+                  );
+                  return quantity == 0
+                      ? AppElevatedButton(
+                          type: ButtonType.filled,
+                          textButton: 'Adicionar ao carrinho',
+                          onPressed: () {
+                            cartController.addProduct(product);
+                          },
+                        )
+                      : Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, CartPage.route);
+                                },
+                                child: Text(
+                                  'No Carrinho',
+                                  style: AppTextStyle.tittleGrey,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: AppQuantitySelector(
+                                increment: () {
+                                  cartController.increment(productCart!);
+                                },
+                                decrement: () {
+                                  if (quantity == 1) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(),
+                                    );
+                                    //TODO pegar a confirmação
+                                    cartController.removeProduct(productCart!);
+                                  }
+                                  cartController.decrement(productCart!);
+                                },
+                                product: product,
+                                quantity: cartController.getQuantity(product),
+                              ),
+                            ),
+                          ],
+                        );
+                },
               ),
-
-              // AppElevatedButton(
-              //   type: ButtonType.filled,
-              //   textButton: 'Adicionar ao carrinho',
-              //   onPressed: null,
-              // ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 
 class AppTotalCheckoutSection extends StatelessWidget {
@@ -11,10 +12,11 @@ class AppTotalCheckoutSection extends StatelessWidget {
   });
 
   final VoidCallback? onPressed;
-  final String total;
+  final double total;
 
   @override
   Widget build(BuildContext context) {
+    Utils utils = Utils();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       decoration: BoxDecoration(
@@ -25,7 +27,9 @@ class AppTotalCheckoutSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: Text(total, style: AppTextStyle.price)),
+          Expanded(
+            child: Text(utils.formatCurrency(total), style: AppTextStyle.price),
+          ),
           Expanded(
             child: AppElevatedButton(
               textButton: 'Continuar',

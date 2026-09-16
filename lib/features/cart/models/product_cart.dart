@@ -10,16 +10,20 @@ class ProductCart extends Product {
     this.quantity = 0,
   });
 
-  final int quantity;
+  int quantity;
+  double get subTotal {
+    return quantity * price;
+  }
 
-  factory ProductCart.fromJson(Map<String, dynamic> json) {
+  //add subtotal
+  factory ProductCart.fromProduct(Product product) {
     return ProductCart(
-      brand: json['brand'],
-      name: json['name'],
-      imageUrl: json['imageUrl'],
-      price: json['price'],
-      category: json['category'],
-      quantity: json['quantity'],
+      brand: product.brand,
+      name: product.name,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      category: product.category,
+      quantity: 1,
     );
   }
 }

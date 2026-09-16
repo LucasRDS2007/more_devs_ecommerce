@@ -11,19 +11,21 @@ class AppCartCard extends StatelessWidget {
     required this.productCart,
     required this.increment,
     required this.decrement,
+    required this.quantity,
   });
   final ProductCart productCart;
   final VoidCallback increment;
   final VoidCallback decrement;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
     Utils utils = Utils();
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Container(
         padding: EdgeInsets.all(10),
-        height: 150,
+        height: 140,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.black, width: 2),
@@ -35,7 +37,7 @@ class AppCartCard extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Container(
-                height: 150,
+                height: 140,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
@@ -71,16 +73,17 @@ class AppCartCard extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          utils.formatCurrency(productCart.price),
+                          utils.formatCurrency(productCart.subTotal),
                           style: AppTextStyle.subPrice,
                         ),
                       ),
                     ],
                   ),
                   AppQuantitySelector(
-                    productCart: productCart,
+                    product: productCart,
                     increment: increment,
                     decrement: decrement,
+                    quantity: quantity,
                   ),
                 ],
               ),
