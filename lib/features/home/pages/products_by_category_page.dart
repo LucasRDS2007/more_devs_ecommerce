@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
+import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_dropdown_button_form_field.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
-
-import '../../../shared/widgets/app_dropdown_button_form_field.dart';
 
 class ProductsByCategoryPage extends StatefulWidget {
   const ProductsByCategoryPage({super.key, required this.categoryName});
@@ -33,13 +34,22 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.categoryName, style: AppTextStyle.tittle),
+        title: Text(widget.categoryName, style: AppTextStyle.title),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () {
-              Navigator.pushNamed(context, CartPage.route);
+          Builder(
+            builder: (context) {
+              return Consumer<CartController>(
+                builder: (context, cartController, child) {
+                  return Visibility(
+                    replacement: AppButtonCartPage(),
+                    visible: cartController.getProductCartQuantity > 0,
+                    child: AppBadgeCartButton(
+                      quantity: cartController.getProductCartQuantity,
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],

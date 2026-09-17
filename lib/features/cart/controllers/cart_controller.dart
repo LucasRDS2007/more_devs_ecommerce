@@ -4,14 +4,13 @@ import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 
 class CartController extends ChangeNotifier {
   List<ProductCart> productCartList = [];
-  //TODO decrement recebe produto por parametro, encontra o item na lista productCartList, incrementa quantity e atualiza a lista
+
+  int get getProductCartQuantity {
+    return productCartList.length;
+  }
 
   double get total {
     return productCartList.fold(0, (sum, item) => sum + item.subTotal);
-  }
-
-  bool hasProduct(Product product) {
-    return productCartList.any((item) => item.name == product.name);
   }
 
   ProductCart? validationProduct(Product product) {
@@ -44,6 +43,7 @@ class CartController extends ChangeNotifier {
 
   void decrement(ProductCart productCart) {
     productCart.quantity--;
+
     productCartList[productCartList.indexOf(productCart)] = productCart;
     notifyListeners();
   }

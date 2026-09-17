@@ -32,10 +32,10 @@ class SignupPage extends StatelessWidget {
                     padding: const EdgeInsets.all(24),
                     child: Column(
                       children: [
-                        Text('Criar uma conta', style: AppTextStyle.tittle),
+                        Text('Criar uma conta', style: AppTextStyle.title),
                         Text(
                           'Insira seus dados para iniciar suas compras',
-                          style: AppTextStyle.subTittle,
+                          style: AppTextStyle.subTitle,
                         ),
                         AppTextField(
                           validator: (value) {

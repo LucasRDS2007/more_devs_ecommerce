@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
+import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
-// import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.power_settings_new),
+          icon: Icon(Icons.power_settings_new, size: 30),
           onPressed: () {
             showDialog(context: context, builder: (_) => AppExitDialog());
           },
@@ -47,15 +48,24 @@ class _HomePageState extends State<HomePage> {
           builder: (context, loginController, child) {
             return Text(
               'Olá, ${loginController.user!.name}',
-              style: AppTextStyle.tittle,
+              style: AppTextStyle.title,
             );
           },
         ),
         actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart_outlined),
-            onPressed: () {
-              Navigator.pushNamed(context, CartPage.route);
+          Builder(
+            builder: (context) {
+              return Consumer<CartController>(
+                builder: (context, cartController, child) {
+                  return Visibility(
+                    replacement: AppButtonCartPage(),
+                    visible: cartController.getProductCartQuantity > 0,
+                    child: AppBadgeCartButton(
+                      quantity: cartController.getProductCartQuantity,
+                    ),
+                  );
+                },
+              );
             },
           ),
         ],
@@ -65,15 +75,6 @@ class _HomePageState extends State<HomePage> {
           return SafeArea(
             child: Column(
               children: [
-                // AppElevatedButton(
-                //   textButton: 'textButton',
-                //   type: ButtonType.filled,
-                //   onPressed: () {
-                //     homeController.getCategories();
-                //     homeController.getCarouselItens();
-                //     homeController.getProducts();
-                //   },
-                // ),
                 AppCarousel(
                   controllerChangeIndex: homeController.changeCarouselIndex,
                   controllerIndex: homeController.activeIndex,

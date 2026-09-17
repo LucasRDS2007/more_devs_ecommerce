@@ -13,22 +13,27 @@ class AppTextStyle {
     fontSize: 12,
   );
   static TextStyle smallGrey = TextStyle(color: AppColors.grey);
-  static TextStyle smallGreyBlold = TextStyle(
+  static TextStyle smallGreyBold = TextStyle(
     color: AppColors.grey,
     fontWeight: FontWeight.bold,
   );
   static TextStyle smallerGrey = TextStyle(color: AppColors.grey, fontSize: 12);
-  static TextStyle tittle = TextStyle(
+  static TextStyle smallerWhiteBold = TextStyle(
+    color: AppColors.white,
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle title = TextStyle(
     color: AppColors.black,
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
-  static TextStyle tittleGrey = TextStyle(
+  static TextStyle titleGrey = TextStyle(
     color: AppColors.grey,
     fontSize: 20,
     fontWeight: FontWeight.bold,
   );
-  static TextStyle subTittle = TextStyle(color: AppColors.black, fontSize: 16);
+  static TextStyle subTitle = TextStyle(color: AppColors.black, fontSize: 16);
   static TextStyle buttonLabel = TextStyle(
     color: AppColors.white,
     fontSize: 16,

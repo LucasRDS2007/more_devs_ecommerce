@@ -6,6 +6,7 @@ import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
 import 'package:provider/provider.dart';
 
 class AppModalProductCard extends StatelessWidget {
@@ -16,9 +17,7 @@ class AppModalProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.5,
       width: MediaQuery.of(context).size.width,
-
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -38,14 +37,11 @@ class AppModalProductCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 15),
-            Text(product.name, style: AppTextStyle.tittle),
+            Text(product.name, style: AppTextStyle.title),
 
             Text(product.brand, style: AppTextStyle.smallGrey),
 
-            Text(
-              style: AppTextStyle.smallBlack,
-              'A acerola é uma fruta tropical conhecida pelo seu sabor refrescante, levemente ácido e naturalmente adocicado. Rica em vitamina C e muito versátil, pode ser consumida in natura, utilizada em sucos, vitaminas, sobremesas e diversas receitas.Ideal para quem busca uma opção saborosa e nutritiva para o dia a dia. Produto selecionado para garantir qualidade, frescor e sabor.',
-            ),
+            Text(product.description, style: AppTextStyle.smallBlack),
             const SizedBox(height: 10),
             Text('R\$${product.price.toString()}', style: AppTextStyle.price),
             const SizedBox(height: 10),
@@ -75,7 +71,7 @@ class AppModalProductCard extends StatelessWidget {
                                 },
                                 child: Text(
                                   'No Carrinho',
-                                  style: AppTextStyle.tittleGrey,
+                                  style: AppTextStyle.titleGrey,
                                 ),
                               ),
                             ),
@@ -84,16 +80,27 @@ class AppModalProductCard extends StatelessWidget {
                                 increment: () {
                                   cartController.increment(productCart!);
                                 },
-                                decrement: () {
-                                  if (quantity == 1) {
-                                    showDialog(
+                                decrement: () async {
+                                  if (cartController.getQuantity(
+                                        productCart!,
+                                      ) ==
+                                      1) {
+                                    final cartRemover = await showDialog<bool>(
                                       context: context,
-                                      builder: (_) => AlertDialog(),
+                                      builder: (_) => AppRemoveConfirmation(
+                                        title:
+                                            'Retirar ${productCart.name} do Carrinho?',
+                                        content:
+                                            'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
+                                      ),
                                     );
-                                    //TODO pegar a confirmação
-                                    cartController.removeProduct(productCart!);
+                                    if (cartRemover == true) {
+                                      cartController.removeProduct(productCart);
+                                      cartController.decrement(productCart);
+                                    }
+                                    return;
                                   }
-                                  cartController.decrement(productCart!);
+                                  cartController.decrement(productCart);
                                 },
                                 product: product,
                                 quantity: cartController.getQuantity(product),

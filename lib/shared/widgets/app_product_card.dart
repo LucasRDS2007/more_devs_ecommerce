@@ -48,10 +48,10 @@ class AppProductCard extends StatelessWidget {
                 style: AppTextStyle.smallGrey,
               ),
             ),
-            Text(product.name.toString(), style: AppTextStyle.subTittle),
+            Text(product.name.toString(), style: AppTextStyle.subTitle),
             Text(
               untils.formatCurrency(product.price),
-              style: AppTextStyle.tittle,
+              style: AppTextStyle.title,
             ),
           ],
         ),

@@ -33,7 +33,7 @@ class _RecoverPageState extends State<RecoverPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Recuperar Senha', style: AppTextStyle.tittle),
+                  Text('Recuperar Senha', style: AppTextStyle.title),
                   SizedBox(height: 16),
                   AppTextField(
                     hintText: 'email@gmail.com',

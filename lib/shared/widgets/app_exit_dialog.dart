@@ -14,7 +14,7 @@ class AppExitDialog extends StatelessWidget {
       icon: Icon(Icons.power_settings_new, size: 80, color: AppColors.black),
       title: Text(
         'Você tem certeza?',
-        style: AppTextStyle.tittle,
+        style: AppTextStyle.title,
         textAlign: TextAlign.center,
       ),
       contentPadding: EdgeInsets.fromLTRB(20, 5, 20, 10),

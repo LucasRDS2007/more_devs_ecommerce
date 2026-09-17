@@ -66,7 +66,7 @@ class AppCartCard extends StatelessWidget {
                             ),
                             Text(
                               productCart.brand,
-                              style: AppTextStyle.smallGreyBlold,
+                              style: AppTextStyle.smallGreyBold,
                             ),
                           ],
                         ),

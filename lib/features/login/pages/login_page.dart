@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                         SizedBox(height: 16),
                         Text(
                           '+DevsEcomm',
-                          style: AppTextStyle.tittle,
+                          style: AppTextStyle.title,
                           textAlign: TextAlign.center,
                         ),
                         Spacer(flex: 2),

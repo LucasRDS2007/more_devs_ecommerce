@@ -13,7 +13,7 @@ class AppSectionTitle extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Text(title, style: AppTextStyle.tittle),
+          Text(title, style: AppTextStyle.title),
           SizedBox(width: 10),
           Container(
             padding: EdgeInsets.all(8),

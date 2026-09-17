@@ -4,6 +4,7 @@ class ProductCart extends Product {
   ProductCart({
     required super.name,
     required super.imageUrl,
+    required super.description,
     required super.brand,
     required super.price,
     required super.category,
@@ -20,6 +21,7 @@ class ProductCart extends Product {
     return ProductCart(
       brand: product.brand,
       name: product.name,
+      description: product.description,
       imageUrl: product.imageUrl,
       price: product.price,
       category: product.category,

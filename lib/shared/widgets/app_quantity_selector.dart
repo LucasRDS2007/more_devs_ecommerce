@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_modify_button.dart';
@@ -29,7 +28,7 @@ class AppQuantitySelector extends StatelessWidget {
             decrement();
           },
         ),
-        Text('${quantity}', style: AppTextStyle.tittle),
+        Text('$quantity', style: AppTextStyle.title),
         AppModifyButton(
           operator: '+',
           onPressed: () {

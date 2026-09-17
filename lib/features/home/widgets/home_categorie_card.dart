@@ -36,7 +36,7 @@ class HomeCategorieCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10),
               child: Text(
                 category.name.toString(),
-                style: AppTextStyle.subTittle,
+                style: AppTextStyle.subTitle,
               ),
             ),
           ],
