@@ -5,8 +5,8 @@ import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 
-class AppCartCard extends StatelessWidget {
-  const AppCartCard({
+class CartCard extends StatelessWidget {
+  const CartCard({
     super.key,
     required this.productCart,
     required this.increment,
@@ -20,7 +20,6 @@ class AppCartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Container(
@@ -28,7 +27,7 @@ class AppCartCard extends StatelessWidget {
         height: 140,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          border: Border.all(color: AppColors.black, width: 2),
+          border: Border.all(color: AppColors.black, width: 1.4),
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
         child: Row(
@@ -73,7 +72,7 @@ class AppCartCard extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          utils.formatCurrency(productCart.subTotal),
+                          Utils.formatCurrency(productCart.subTotal),
                           style: AppTextStyle.subPrice,
                         ),
                       ),

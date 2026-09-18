@@ -4,6 +4,7 @@ import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
@@ -85,15 +86,18 @@ class AppModalProductCard extends StatelessWidget {
                                         productCart!,
                                       ) ==
                                       1) {
-                                    final cartRemover = await showDialog<bool>(
-                                      context: context,
-                                      builder: (_) => AppRemoveConfirmation(
-                                        title:
-                                            'Retirar ${productCart.name} do Carrinho?',
-                                        content:
-                                            'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
-                                      ),
-                                    );
+                                    final cartRemover =
+                                        await Modals.confirmationDialogAlert<
+                                          bool
+                                        >(
+                                          context,
+                                          body: AppRemoveConfirmation(
+                                            title:
+                                                'Retirar ${productCart.name} do Carrinho?',
+                                            content:
+                                                'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
+                                          ),
+                                        );
                                     if (cartRemover == true) {
                                       cartController.removeProduct(productCart);
                                       cartController.decrement(productCart);

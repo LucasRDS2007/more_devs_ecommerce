@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Modals {
-  Future<dynamic> appBottomSheet(BuildContext context, Widget body) {
+  static Future<T?> appBottomSheet<T>(BuildContext context, Widget body) {
     return showModalBottomSheet(
       isScrollControlled: true,
       showDragHandle: true,
@@ -15,8 +15,8 @@ class Modals {
 
   static Future<T?> confirmationDialogAlert<T>(
     BuildContext context, {
-    required Widget boody,
+    required Widget body,
   }) async {
-    return await showDialog<T>(context: context, builder: (_) => boody);
+    return await showDialog<T>(context: context, builder: (_) => body);
   }
 }

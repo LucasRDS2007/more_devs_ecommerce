@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
+import 'package:more_devs_ecommerce/features/cart/pages/checkout_page.dart';
+import 'package:more_devs_ecommerce/features/cart/widgets/cart_total_card.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_cart_card.dart';
+import 'package:more_devs_ecommerce/features/cart/widgets/cart_card.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_cart_empty.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_total_checkout_section.dart';
+import 'package:more_devs_ecommerce/features/cart/widgets/cart_confirm_section.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatelessWidget {
@@ -36,24 +38,14 @@ class CartPage extends StatelessWidget {
                     itemBuilder: (context, index) {
                       ProductCart productCart =
                           cartController.productCartList[index];
-                      return AppCartCard(
+                      return CartCard(
                         productCart: productCart,
                         decrement: () async {
                           if (cartController.getQuantity(productCart) == 1) {
-                            // final cartRemover = await showDialog<bool>(
-                            //   context: context,
-                            //   builder: (_) => AppRemoveConfirmation(
-                            //     title:
-                            //         'Retirar ${productCart.name} do Carrinho?',
-                            //     content:
-                            //         'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
-                            //   ),
-                            // );
-
                             final cartRemover =
                                 await Modals.confirmationDialogAlert<bool>(
                                   context,
-                                  boody: AppRemoveConfirmation(
+                                  body: AppRemoveConfirmation(
                                     title:
                                         'Retirar ${productCart.name} do Carrinho?',
                                     content:
@@ -77,9 +69,20 @@ class CartPage extends StatelessWidget {
                     },
                   ),
                 ),
-                AppTotalCheckoutSection(
-                  onPressed: () {},
-                  total: cartController.total,
+                CartCheckoutSection(
+                  column: Column(
+                    spacing: 10,
+                    children: [
+                      CartTotalCard(total: cartController.total),
+                      AppElevatedButton(
+                        textButton: 'Continuar',
+                        type: ButtonType.filled,
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(CheckoutPage.route);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             );

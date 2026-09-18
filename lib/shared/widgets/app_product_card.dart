@@ -13,11 +13,9 @@ class AppProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Modals modals = Modals();
-    Utils untils = Utils();
     return GestureDetector(
       onTap: () {
-        modals.appBottomSheet(context, AppModalProductCard(product: product));
+        Modals.appBottomSheet(context, AppModalProductCard(product: product));
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -50,7 +48,7 @@ class AppProductCard extends StatelessWidget {
             ),
             Text(product.name.toString(), style: AppTextStyle.subTitle),
             Text(
-              untils.formatCurrency(product.price),
+              Utils.formatCurrency(product.price),
               style: AppTextStyle.title,
             ),
           ],

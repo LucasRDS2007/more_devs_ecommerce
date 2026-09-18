@@ -135,10 +135,12 @@ class SignupPage extends StatelessWidget {
                               await controller.hadleSignup();
                             } catch (e) {
                               if (e is ErrorDescription) {
-                                AppSnackBar.error(
-                                  context,
-                                  'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
-                                );
+                                if (context.mounted) {
+                                  AppSnackBar.error(
+                                    context,
+                                    'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
+                                  );
+                                }
                               }
                             }
                           },
