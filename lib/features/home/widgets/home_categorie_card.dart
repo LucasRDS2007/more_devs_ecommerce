@@ -35,10 +35,6 @@ class HomeCategorieCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                child: Image.network(
-                  category.imageUrl.toString(),
-                  fit: BoxFit.cover,
-                ),
               ),
             ),
             Padding(
