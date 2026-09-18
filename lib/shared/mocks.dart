@@ -2,153 +2,153 @@ import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 
 final List<Map<String, dynamic>> categoriesJson = [
-  {'name': 'Frutas', 'imageUrl': 'https://i.postimg.cc/SNX7hc6F/Image.png'},
-  {'name': 'Verduras', 'imageUrl': 'https://i.postimg.cc/xTky2LvV/Image-1.png'},
-  {'name': 'Padaria', 'imageUrl': 'https://i.postimg.cc/Yq4fHQ6w/Image-2.png'},
+  {
+    'name': 'Frutas',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=240&q=75',
+  },
+  {
+    'name': 'Verduras',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=240&q=75',
+  },
+  {
+    'name': 'Padaria',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=240&q=75',
+  },
   {
     'name': 'Importados',
-    'imageUrl': 'https://i.postimg.cc/8PFBSLh2/Image-(1).png',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?auto=format&fit=crop&w=240&q=75',
   },
 ];
 
 final List<Map<String, dynamic>> productsJson = [
-  // =========================
-  // FRUTAS
-  // =========================
   {
-    'brand': 'Akatsu',
-    'name': 'Acerola',
-    'description':
-        'A acerola é uma fruta tropical conhecida pelo seu sabor refrescante, levemente ácido e naturalmente adocicado. Rica em vitamina C e muito versátil, pode ser consumida in natura, utilizada em sucos, vitaminas, sobremesas e diversas receitas. Ideal para quem busca uma opção saborosa e nutritiva para o dia a dia. Produto selecionado para garantir qualidade, frescor e sabor. ',
-    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
-    'price': 7.99,
-    'category': 'Frutas',
-  },
-  {
-    'brand': 'Natural da Terra',
-    'name': 'Maçã',
-    'description':
-        'A maçã é uma fruta conhecida pela textura crocante, sabor levemente adocicado e aroma agradável. Uma opção prática e versátil para consumir ao longo do dia, podendo ser apreciada in natura ou utilizada em saladas, sobremesas, tortas, sucos e outras receitas. Selecionada cuidadosamente para oferecer frescor, qualidade e uma experiência saborosa em cada mordida.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-    'price': 8.49,
-    'category': 'Frutas',
-  },
-  {
-    'brand': 'Natural da Terra',
-    'name': 'Banana',
-    'description':
-        'A banana é uma fruta naturalmente doce, macia e muito versátil, ideal para diferentes momentos do dia. Pode ser consumida pura, adicionada a vitaminas e saladas de frutas ou utilizada no preparo de bolos, sobremesas e outras receitas. Uma escolha prática e saborosa para complementar a alimentação diária. Produto selecionado para garantir qualidade e frescor.',
-    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
-    'price': 6.99,
-    'category': 'Frutas',
-  },
-
-  // =========================
-  // VERDURAS
-  // =========================
-  {
-    'brand': 'Natural da Terra',
+    'id': '46640ee7-0361-4aad-8fe3-00fd9deab31d',
+    'brand': 'Natural da terra',
     'name': 'Rabanete',
-    'description':
-        'O rabanete é um vegetal de sabor levemente picante, textura crocante e aparência característica, muito utilizado em saladas e acompanhamentos. Seu frescor combina com diferentes preparações e pode trazer mais sabor e variedade às refeições. Ideal para quem procura ingredientes versáteis para o dia a dia. Produto selecionado para garantir qualidade, crocância e frescor.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
+    'imageUrl':
+        'https://images.pexels.com/photos/26859513/pexels-photo-26859513.jpeg?auto=compress&cs=tinysrgb&w=640',
     'price': 10.99,
     'category': 'Verduras',
+    'description':
+        'O rabanete é uma raiz crocante e levemente picante, ideal para saladas, conservas e acompanhamentos frescos.',
   },
   {
-    'brand': 'Natural da Terra',
+    'id': 'dcd9a074-0360-43a8-bee8-cd2ecc80eea1',
+    'brand': 'Natural da terra',
     'name': 'Cogumelo',
-    'description':
-        'Os cogumelos são ingredientes versáteis, conhecidos pela textura macia e pelo sabor marcante que combina com diferentes tipos de pratos. Podem ser preparados salteados, grelhados, utilizados em massas, risotos, molhos e diversas outras receitas. Uma excelente opção para acrescentar sabor e variedade à cozinha. Produto selecionado para garantir qualidade e frescor.',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
+    'imageUrl':
+        'https://images.pexels.com/photos/5950443/pexels-photo-5950443.jpeg?auto=compress&cs=tinysrgb&w=640',
     'price': 12.19,
     'category': 'Verduras',
+    'description':
+        'O cogumelo possui sabor delicado e textura macia, combinando com molhos, risotos, massas e diversos refogados.',
   },
   {
-    'brand': 'Natural da Terra',
+    'id': '191dae2f-d849-4482-b12c-d48fbbc7ae0a',
+    'brand': 'Natural da terra',
     'name': 'Alface',
-    'description':
-        'A alface é uma hortaliça leve e refrescante, muito presente em saladas e acompanhamentos do dia a dia. Com folhas delicadas e textura crocante, combina facilmente com outros vegetais, molhos e diferentes ingredientes. Uma opção prática para preparar refeições frescas e equilibradas. Produto selecionado para garantir folhas frescas, qualidade e sabor.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-    'price': 5.49,
+    'imageUrl':
+        'https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?auto=format&fit=crop&w=640&q=75',
+    'price': 4.50,
     'category': 'Verduras',
-  },
-
-  // =========================
-  // PADARIA
-  // =========================
-  {
-    'brand': 'Padaria do Bairro',
-    'name': 'Pão Francês',
     'description':
-        'O pão francês é um clássico da padaria brasileira, conhecido pela casca dourada e crocante e pelo interior macio e leve. Perfeito para o café da manhã, lanches ou para acompanhar refeições, pode ser consumido puro ou combinado com manteiga, frios, queijos e outros ingredientes. Produzido para oferecer aquele sabor tradicional de pão fresquinho.',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
-    'price': 9.99,
+        'A alface é uma verdura leve, fresca e versátil, perfeita para preparar saladas, sanduíches e refeições equilibradas.',
+  },
+  {
+    'id': '249fea87-58d0-418f-b427-f730780605b5',
+    'brand': 'Akatsu',
+    'name': 'Acerola',
+    'imageUrl':
+        'https://cdn.pixabay.com/photo/2017/08/22/19/26/acerola-2670143_640.jpg',
+    'price': 7.99,
+    'category': 'Frutas',
+    'description':
+        'A acerola é uma fruta tropical conhecida pelo seu sabor refrescante, levemente ácido e naturalmente adocicado. Rica em vitamina C e muito versátil, pode ser consumida in natura, utilizada em sucos, vitaminas, sobremesas e diversas receitas.\nIdeal para quem busca uma opção saborosa e nutritiva para o dia a dia. Produto selecionado para garantir qualidade, frescor e sabor.',
+  },
+  {
+    'id': 'd920c0ae-3fca-4261-8b2d-35724b16ca56',
+    'brand': 'Akatsu',
+    'name': 'Banana',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=640&q=75',
+    'price': 6.29,
+    'category': 'Frutas',
+    'description':
+        'A banana é uma fruta naturalmente doce e rica em energia, ótima para lanches, vitaminas, sobremesas e receitas.',
+  },
+  {
+    'id': 'b9350138-a6c0-422c-88ad-7257a2d53755',
+    'brand': 'Akatsu',
+    'name': 'Morango',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=640&q=75',
+    'price': 9.90,
+    'category': 'Frutas',
+    'description':
+        'O morango tem sabor doce e levemente ácido, sendo uma excelente opção para sobremesas, vitaminas ou consumo fresco.',
+  },
+  {
+    'id': '95da5e5d-ea70-4cee-9b41-0c2df5329c43',
+    'brand': 'Pão & Cia',
+    'name': 'Pão francês',
+    'imageUrl':
+        'https://cdn.pixabay.com/photo/2020/06/21/15/59/french-bread-5325626_640.jpg',
+    'price': 15.00,
     'category': 'Padaria',
+    'description':
+        'O pão francês possui casca crocante e miolo macio, ideal para acompanhar o café da manhã ou preparar sanduíches.',
   },
   {
-    'brand': 'Padaria do Bairro',
-    'name': 'Pão de Forma',
-    'description':
-        'O pão de forma possui textura macia e sabor suave, sendo uma opção prática para preparar sanduíches, torradas e diferentes lanches. Sua versatilidade permite combinar o produto com ingredientes doces ou salgados, tornando-o ideal para diversas ocasiões. Uma escolha conveniente para manter em casa e preparar refeições rápidas e saborosas.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-    'price': 12.49,
+    'id': '169b5515-38a3-4416-a2b2-736b48b64d9e',
+    'brand': 'Pão & Cia',
+    'name': 'Baguete',
+    'imageUrl':
+        'https://images.pexels.com/photos/10315700/pexels-photo-10315700.jpeg?auto=compress&cs=tinysrgb&w=640',
+    'price': 8.75,
     'category': 'Padaria',
+    'description':
+        'A baguete é um pão de formato alongado, com casca dourada e interior macio, perfeito para entradas e sanduíches.',
   },
   {
-    'brand': 'Padaria do Bairro',
-    'name': 'Croissant',
-    'description':
-        'O croissant é um clássico da panificação, reconhecido por suas camadas delicadas, textura leve e sabor amanteigado. Ideal para acompanhar cafés, chás ou outras bebidas, também pode ser servido em lanches e diferentes momentos do dia. Uma opção especial para quem aprecia produtos de padaria com textura crocante por fora e macia por dentro.',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
-    'price': 8.99,
-    'category': 'Padaria',
-  },
-
-  // =========================
-  // IMPORTADOS
-  // =========================
-  {
-    'brand': 'Ferrero',
-    'name': 'Nutella',
-    'description':
-        'Nutella é um creme de avelã com cacau reconhecido por sua textura cremosa e sabor marcante. Versátil e fácil de combinar, pode ser utilizado em pães, torradas, panquecas, frutas, sobremesas e diversas receitas. Ideal para transformar momentos simples em experiências mais saborosas. Uma opção prática para ter em casa e aproveitar no café da manhã ou nos lanches.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-    'price': 29.99,
+    'id': 'd82b367c-ab36-4eda-bb01-dd112d8cb6e2',
+    'brand': 'La Frontera',
+    'name': 'Queijo Manchego',
+    'imageUrl':
+        'https://arias.es/wp-content/uploads/2022/01/casa-del-campo-semicurado-3-kilos.jpg',
+    'price': 45.90,
     'category': 'Importados',
+    'description':
+        'O queijo Manchego é um queijo espanhol de sabor marcante e textura firme, excelente para tábuas de frios e aperitivos.',
   },
   {
-    'brand': 'Lindt',
-    'name': 'Chocolate Lindt',
-    'description':
-        'O chocolate Lindt combina ingredientes selecionados com uma textura cremosa e sabor intenso, característica da tradição da marca na produção de chocolates. Ideal para apreciar individualmente ou compartilhar em momentos especiais, também pode acompanhar cafés e sobremesas. Uma opção para quem busca uma experiência diferenciada e um chocolate de qualidade.',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
-    'price': 24.99,
+    'id': '4cde902e-4d50-4876-ab8f-f6acfdd7e8f2',
+    'brand': 'La Frontera',
+    'name': 'Chocolate Belga',
+    // Frank Wouters, CC BY 2.0: https://creativecommons.org/licenses/by/2.0/
+    // https://commons.wikimedia.org/wiki/File:Belgian_chocolates.jpg
+    'imageUrl':
+        'https://upload.wikimedia.org/wikipedia/commons/3/36/Belgian_chocolates.jpg',
+    'price': 32.00,
     'category': 'Importados',
-  },
-  {
-    'brand': 'Pringles',
-    'name': 'Batata Pringles',
     'description':
-        'Pringles é um snack conhecido pelo formato característico, textura crocante e sabor marcante. Prática para consumir em diferentes ocasiões, é uma opção para lanches, encontros com amigos ou momentos de descontração. Pode ser servida individualmente ou compartilhada. Uma escolha conveniente para quem procura um snack crocante e saboroso para qualquer momento.',
-    'imageUrl': 'https://i.postimg.cc/8Pt82Qmf/Image-1.png',
-    'price': 18.99,
-    'category': 'Importados',
+        'O chocolate belga é conhecido por sua textura cremosa e sabor intenso, produzido com ingredientes de alta qualidade.',
   },
 ];
 
 final List<Map<String, dynamic>> carouselJson = [
   {
     'title': 'Aproveite as ofertas',
-    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=640&q=75',
   },
   {
     'title': 'Experimente agora!',
-    'imageUrl': 'https://i.postimg.cc/RVP8P1vw/Image-2.png',
-  },
-  {
-    'title': 'Compre Compre Compre!',
-    'imageUrl': 'https://i.postimg.cc/BQMWr9B8/Image.png',
+    'imageUrl':
+        'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=640&q=75',
   },
 ];
 

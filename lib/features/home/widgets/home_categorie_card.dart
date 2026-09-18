@@ -27,9 +27,18 @@ class HomeCategorieCard extends StatelessWidget {
               width: 90,
               height: 90,
               replacement: Bone.circle(size: 90),
-              child: Image.network(
-                category.imageUrl.toString(),
-                fit: BoxFit.cover,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  image: DecorationImage(
+                    image: NetworkImage(category.imageUrl.toString()),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Image.network(
+                  category.imageUrl.toString(),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Padding(

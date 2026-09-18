@@ -30,7 +30,7 @@ class CheckoutPage extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        // CartTotalCard(total: cartController.total),
+                        CartTotalCard(total: cartController.total),
                         Expanded(
                           child: ListView.builder(
                             itemCount: cartController.productCartList.length,

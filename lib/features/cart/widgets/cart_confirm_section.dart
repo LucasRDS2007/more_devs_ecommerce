@@ -12,7 +12,7 @@ class CartCheckoutSection extends StatelessWidget {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppColors.white,
-        border: Border(top: BorderSide(color: AppColors.black)),
+        border: Border(top: BorderSide(color: AppColors.grey, width: 1)),
       ),
       child: column,
     );
