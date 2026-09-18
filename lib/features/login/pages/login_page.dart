@@ -89,8 +89,17 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         AppElevatedButton(
-                          onPressed: () {
-                            Navigator.popAndPushNamed(context, HomePage.route);
+                          onPressed: () async {
+                            try {
+                              await controller.handleLogin();
+                              if (!context.mounted) return;
+                              Navigator.popAndPushNamed(
+                                context,
+                                HomePage.route,
+                              );
+                            } on AuthException catch (e) {
+                              AppSnackBar.error(context, e.message);
+                            }
                           },
                           type: ButtonType.filled,
                           textButton: 'Entrar',
