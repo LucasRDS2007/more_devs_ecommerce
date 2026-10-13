@@ -46,7 +46,11 @@ class LoginController extends ChangeNotifier {
 
   Future<void> login() async {
     await Future.delayed(Duration(seconds: 2));
-    user = User(name: 'Usuário', email: emailController.text);
+    if (emailController.text.trim() != 'Lucas@gmail.com' ||
+        senhaController.text.trim() != '010203') {
+      throw AuthException('E-mail ou senha Incorretos');
+    }
+    user = User(name: 'Lucas', email: emailController.text);
   }
 
   String? validateEmail(String? value) {
