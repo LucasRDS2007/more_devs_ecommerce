@@ -131,17 +131,52 @@ class SignupPage extends StatelessWidget {
                         AppElevatedButton(
                           type: ButtonType.filled,
                           onPressed: () async {
-                            try {
-                              await controller.hadleSignup();
-                            } catch (e) {
-                              if (e is ErrorDescription) {
-                                if (context.mounted) {
-                                  AppSnackBar.error(
-                                    context,
-                                    'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
-                                  );
-                                }
-                              }
+                            final result = await controller.hadleSignup();
+
+                            if (!context.mounted) return;
+
+                            switch (result) {
+                              case SignupResult.success:
+                                Navigator.of(context).pop(true);
+                                break;
+
+                              case SignupResult.validationError:
+                                break;
+
+                              case SignupResult.termsNotAccepted:
+                                AppSnackBar.error(
+                                  context,
+                                  'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
+                                );
+                                break;
+
+                              case SignupResult.emailAlreadyExists:
+                                AppSnackBar.error(
+                                  context,
+                                  'Este email já está cadastrado.',
+                                );
+                                break;
+
+                              case SignupResult.invalidData:
+                                AppSnackBar.error(
+                                  context,
+                                  'Os dados informados são inválidos.',
+                                );
+                                break;
+
+                              case SignupResult.connectionError:
+                                AppSnackBar.error(
+                                  context,
+                                  'Não foi possível conectar ao servidor. Verifique sua conexão.',
+                                );
+                                break;
+
+                              case SignupResult.serverError:
+                                AppSnackBar.error(
+                                  context,
+                                  'Ocorreu um erro ao criar sua conta. Tente novamente.',
+                                );
+                                break;
                             }
                           },
                           textButton: 'Continuar',
