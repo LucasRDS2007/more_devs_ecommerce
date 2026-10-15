@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
 import 'package:more_devs_ecommerce/features/signup/exceptions/signup_exception.dart';
+import 'package:more_devs_ecommerce/shared/http/http_client.dart';
+import 'package:more_devs_ecommerce/shared/http/http_exception.dart';
 
 class SignupService {
-  final String baseUrl = 'https://api-production-c0289.up.railway.app/api/v1/';
-
-  final Dio dio = Dio();
+  final HttpClient httpClient = HttpClient();
 
   Future<AuthUser> registerUser(
     String name,
@@ -15,8 +15,8 @@ class SignupService {
     bool acceptedTerms,
   ) async {
     try {
-      final response = await dio.post(
-        '${baseUrl}auth/register',
+      final response = await httpClient.post(
+        '/auth/register',
         data: {
           'name': name,
           'email': email,
@@ -27,24 +27,21 @@ class SignupService {
       );
 
       return AuthUser.fromJson(response.data);
-    } on DioException catch (e) {
-      throw Exception(e.message);
-      // final statusCode = e.response?.statusCode;
+    } on HttpException catch (e) {
+      switch (e.statusCode) {
+        case 400:
+          throw SignupException(SignupExceptionType.invalidData);
 
-      // switch (statusCode) {
-      //   case 400:
-      //     throw SignupException(SignupExceptionType.invalidData);
+        case 409:
+          throw SignupException(SignupExceptionType.emailAlreadyExists);
 
-      //   case 409:
-      //     throw SignupException(SignupExceptionType.emailAlreadyExists);
+        default:
+          if (e.statusCode == null) {
+            throw SignupException(SignupExceptionType.connectionError);
+          }
 
-      //   default:
-      //     if (e.response == null) {
-      //       throw SignupException(SignupExceptionType.connectionError);
-      //     }
-
-      //     throw SignupException(SignupExceptionType.serverError);
-      // }
+          throw SignupException(SignupExceptionType.serverError);
+      }
     }
   }
 }

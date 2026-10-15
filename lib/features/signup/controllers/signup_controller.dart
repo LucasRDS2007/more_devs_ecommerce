@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/features/signup/exceptions/signup_exception.dart';
 import 'package:more_devs_ecommerce/features/signup/services/signup_service.dart';
 
 enum SignupResult {
