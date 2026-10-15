@@ -1,21 +1,21 @@
-import 'package:dio/dio.dart';
-import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
-import 'package:more_devs_ecommerce/features/signup/exceptions/signup_exception.dart';
-import 'package:more_devs_ecommerce/shared/http/http_client.dart';
-import 'package:more_devs_ecommerce/shared/http/http_exception.dart';
+import 'package:more_devs_ecommerce/shared/network/http_client.dart';
+import 'package:more_devs_ecommerce/shared/network/http_client_exception.dart';
 
 class SignupService {
-  final HttpClient httpClient = HttpClient();
+  SignupService({HttpClient? httpClient})
+    : _httpClient = httpClient ?? HttpClient();
 
-  Future<AuthUser> registerUser(
-    String name,
-    String email,
-    String password,
-    String confirmPassword,
-    bool acceptedTerms,
-  ) async {
+  final HttpClient _httpClient;
+
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+    required String confirmPassword,
+    required bool acceptedTerms,
+  }) async {
     try {
-      final response = await httpClient.post(
+      await _httpClient.post(
         '/auth/register',
         data: {
           'name': name,
@@ -25,23 +25,42 @@ class SignupService {
           'acceptedTerms': acceptedTerms,
         },
       );
+    } on HttpClientException catch (error) {
+      final body = error.responseData;
+      if (body is Map) {
+        final code = body['code']?.toString();
+        final message = body['message']?.toString();
+        final details = body['details'];
 
-      return AuthUser.fromJson(response.data);
-    } on HttpException catch (e) {
-      switch (e.statusCode) {
-        case 400:
-          throw SignupException(SignupExceptionType.invalidData);
+        if (code == 'EMAIL_ALREADY_EXISTS') {
+          throw Exception(message ?? 'Este email ja esta cadastrado.');
+        }
 
-        case 409:
-          throw SignupException(SignupExceptionType.emailAlreadyExists);
-
-        default:
-          if (e.statusCode == null) {
-            throw SignupException(SignupExceptionType.connectionError);
+        if (code == 'VALIDATION_ERROR' && details is List) {
+          final messages = details
+              .whereType<Map>()
+              .map((detail) => detail['message']?.toString())
+              .whereType<String>()
+              .where((detailMessage) => detailMessage.isNotEmpty)
+              .toSet();
+          if (messages.isNotEmpty) {
+            throw Exception(messages.join('\n'));
           }
+        }
 
-          throw SignupException(SignupExceptionType.serverError);
+        if (message != null && message.isNotEmpty) {
+          throw Exception(message);
+        }
       }
+
+      if (error.statusCode != null) {
+        throw Exception(
+          'Nao foi possivel criar a conta. Confira os dados e tente novamente.',
+        );
+      }
+      throw Exception(
+        'Nao foi possivel conectar ao servidor. Tente novamente.',
+      );
     }
   }
 }

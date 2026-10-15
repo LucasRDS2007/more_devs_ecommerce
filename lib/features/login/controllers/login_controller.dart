@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
-import 'package:more_devs_ecommerce/features/login/services/login_service.dart';
+import 'package:more_devs_ecommerce/shared/exceptions/auth_exceptions.dart';
 
 class LoginController extends ChangeNotifier {
   LoginService loginService = LoginService();

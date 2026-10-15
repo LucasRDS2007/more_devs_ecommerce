@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/signup/services/signup_service.dart';
 
-enum SignupResult {
-  success,
-  validationError,
-  termsNotAccepted,
-  emailAlreadyExists,
-  invalidData,
-  connectionError,
-  serverError,
-}
-
 class SignupController extends ChangeNotifier {
-  final SignupService signupService = SignupService();
+  SignupController({SignupService? signupService})
+    : _signupService = signupService ?? SignupService();
+
+  final SignupService _signupService;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -61,43 +54,21 @@ class SignupController extends ChangeNotifier {
     ];
   }
 
-  Future<SignupResult> hadleSignup() async {
-    if (!key.currentState!.validate()) {
-      return SignupResult.validationError;
-    }
+  Future<bool> hadleSignup() async {
+    if (!(key.currentState?.validate() ?? false)) return false;
 
-    if (!isActiveChecked) {
+    if (snackCheckError()) {
       errorCheckbox = true;
       notifyListeners();
-      return SignupResult.termsNotAccepted;
+
+      throw ErrorDescription('not_found');
     }
 
-    errorCheckbox = null;
     isLoading = true;
     notifyListeners();
-
     try {
-      await signupService.registerUser(
-        nomeController.text.trim(),
-        emailController.text.trim(),
-        senha,
-        confirmarSenha,
-        isActiveChecked,
-      );
-      return SignupResult.success;
-    } on SignupException catch (e) {
-      switch (e.type) {
-        case SignupExceptionType.emailAlreadyExists:
-          return SignupResult.emailAlreadyExists;
-        case SignupExceptionType.invalidData:
-          return SignupResult.invalidData;
-        case SignupExceptionType.connectionError:
-          return SignupResult.connectionError;
-        case SignupExceptionType.serverError:
-          return SignupResult.serverError;
-      }
-    } catch (e) {
-      return SignupResult.serverError;
+      await signup();
+      return true;
     } finally {
       isLoading = false;
       notifyListeners();
@@ -120,6 +91,16 @@ class SignupController extends ChangeNotifier {
       errorCheckbox = null;
     }
     notifyListeners();
+  }
+
+  Future<void> signup() async {
+    await _signupService.register(
+      name: nomeController.text.trim(),
+      email: emailController.text.trim(),
+      password: senha,
+      confirmPassword: confirmarSenha,
+      acceptedTerms: isActiveChecked,
+    );
   }
 
   String? validateEmail(String? value) {
