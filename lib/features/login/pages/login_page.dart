@@ -107,8 +107,20 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(height: 16),
                         AppElevatedButton(
-                          onPressed: () => {
-                            Navigator.pushNamed(context, SignupPage.route),
+                          onPressed: () async {
+                            final result = await Navigator.pushNamed(
+                              context,
+                              SignupPage.route,
+                            );
+
+                            if (!context.mounted) return;
+
+                            if (result == true) {
+                              AppSnackBar.success(
+                                context,
+                                'Conta criada com sucesso!',
+                              );
+                            }
                           },
                           type: ButtonType.outlined,
                           textButton: 'Cadastrar-se',
