@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
             return Text(
-              'Olá, ${loginController.user!.name}',
+              'Olá, ${loginController.AuthUser!.name}',
               style: AppTextStyle.title,
             );
           },

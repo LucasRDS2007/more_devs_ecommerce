@@ -15,9 +15,12 @@ class SignupController extends ChangeNotifier {
   final RegExp _senhaMaiuscula = RegExp(r'[A-Z]');
   final RegExp _senhaMinuscula = RegExp(r'[a-z]');
   final RegExp _senhaCaracterEspecial = RegExp(r'[^a-zA-Z0-9]');
+
   final int _caracterMinimoSenha = 6;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nomeController = TextEditingController();
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController nomeController = TextEditingController();
+
   String senha = '';
   String confirmarSenha = '';
   bool isActiveChecked = false;
@@ -45,8 +48,8 @@ class SignupController extends ChangeNotifier {
     return [
       {'Mínimo de 6 caracteres': isSenhaCaracterMinimo},
       {'No mínimo um caracter especial': isSenhaCaracterEspecial},
-      {'No mínimo uma letra maiscula': isSenhaMaiusculo},
-      {'No mínimo uma letra minuscula': isSenhaMinusculo},
+      {'No mínimo uma letra maiúscula': isSenhaMaiusculo},
+      {'No mínimo uma letra minúscula': isSenhaMinusculo},
       {'Senhas coincidem': isConfirmedSenha},
     ];
   }
@@ -101,20 +104,32 @@ class SignupController extends ChangeNotifier {
   }
 
   String? validateEmail(String? value) {
-    if (isEmailValid) {
-      return null;
+    final email = value?.trim() ?? '';
+    if (email.isEmpty) {
+      return 'Email é obrigatório';
     }
-    return 'Email inválido';
+    if (!_emailRegex.hasMatch(email)) {
+      return 'Email inválido';
+    }
+    return null;
   }
 
   String? validateNome(String? value) {
-    if (isNomeValid) {
-      return null;
+    final nome = value?.trim() ?? '';
+    if (nome.isEmpty) {
+      return 'Nome é obrigatório';
     }
-    return 'Nome invalido';
+    if (!_nameRegex.hasMatch(nome)) {
+      return 'Nome inválido';
+    }
+    return null;
   }
 
   String? validateSenha(String? value) {
+    final senhaValue = value ?? '';
+    if (senhaValue.isEmpty) {
+      return 'Senha é obrigatória';
+    }
     if (!isSenhaValid) {
       return 'Falta algum requisito de senha';
     }
@@ -122,16 +137,20 @@ class SignupController extends ChangeNotifier {
   }
 
   String? validateConfirmarSenha(String? value) {
-    if (!isConfirmedSenha) {
+    final confirmarSenhaValue = value ?? '';
+    if (confirmarSenhaValue.isEmpty) {
+      return 'Confirmação de senha é obrigatória';
+    }
+    if (confirmarSenhaValue != senha) {
       return 'Senhas não coincidem';
     }
     return null;
   }
 
-  bool snackCheckError() {
-    if (!isActiveChecked) {
-      return true;
-    }
-    return false;
+  @override
+  void dispose() {
+    emailController.dispose();
+    nomeController.dispose();
+    super.dispose();
   }
 }
