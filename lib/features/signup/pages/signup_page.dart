@@ -132,7 +132,13 @@ class SignupPage extends StatelessWidget {
                           type: ButtonType.filled,
                           onPressed: () async {
                             try {
-                              await controller.hadleSignup();
+                              final registered = await controller.hadleSignup();
+                              if (registered && context.mounted) {
+                                AppSnackBar.success(
+                                  context,
+                                  'Conta criada com sucesso.',
+                                );
+                              }
                             } catch (e) {
                               if (e is ErrorDescription) {
                                 if (context.mounted) {
@@ -141,6 +147,12 @@ class SignupPage extends StatelessWidget {
                                     'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
                                   );
                                 }
+                              } else if (context.mounted) {
+                                AppSnackBar.error(
+                                  context,
+                                  //Exception: Nao foi possivel criar a conta. Confira os dados e tente novamente.
+                                  e.toString().replaceFirst('Exception: ', ''),
+                                );
                               }
                             }
                           },

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/signup/services/signup_service.dart';
 
 class SignupController extends ChangeNotifier {
+  SignupController({SignupService? signupService})
+    : _signupService = signupService ?? SignupService();
+
+  final SignupService _signupService;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
   final RegExp _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
@@ -46,21 +51,25 @@ class SignupController extends ChangeNotifier {
     ];
   }
 
-  Future<void> hadleSignup() async {
-    if (key.currentState!.validate()) {
-      if (snackCheckError()) {
-        errorCheckbox = true;
-        notifyListeners();
-        throw ErrorDescription('not_found');
-      }
+  Future<bool> hadleSignup() async {
+    if (!(key.currentState?.validate() ?? false)) return false;
 
-      isLoading = true;
+    if (snackCheckError()) {
+      errorCheckbox = true;
+      notifyListeners();
+
+      throw ErrorDescription('not_found');
+    }
+
+    isLoading = true;
+    notifyListeners();
+    try {
+      await signup();
+      return true;
+    } finally {
+      isLoading = false;
       notifyListeners();
     }
-    await signup();
-    notifyListeners();
-
-    isLoading = false;
   }
 
   void setSenha(String senhaParam) {
@@ -82,7 +91,13 @@ class SignupController extends ChangeNotifier {
   }
 
   Future<void> signup() async {
-    await Future.delayed(Duration(seconds: 2));
+    await _signupService.register(
+      name: nomeController.text.trim(),
+      email: emailController.text.trim(),
+      password: senha,
+      confirmPassword: confirmarSenha,
+      acceptedTerms: isActiveChecked,
+    );
   }
 
   String? validateEmail(String? value) {
