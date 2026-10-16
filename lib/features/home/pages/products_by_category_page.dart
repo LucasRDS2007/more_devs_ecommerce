@@ -24,9 +24,9 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(((timeStamp) {
-      context.read<ProductsByCategoryController>().getProductsByCategory(
-        widget.categoryName,
-      );
+      // context.read<ProductsByCategoryController>().getProductsByCategory(
+      //   widget.categoryName,
+      // );
     }));
   }
 

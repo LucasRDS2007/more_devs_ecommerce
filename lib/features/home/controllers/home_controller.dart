@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/home/data/home_data.dart';
+
 import 'package:more_devs_ecommerce/features/home/models/carousel_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
-import 'package:more_devs_ecommerce/shared/mocks.dart';
+import 'package:more_devs_ecommerce/features/home/service/home_service.dart';
 
 enum CategoriesViewState { loading, sucess, error }
 
@@ -15,6 +17,8 @@ class HomeController extends ChangeNotifier {
   List<Product> products = [];
   List<CarouselItem> carouselItens = [];
   int activeIndex = 0;
+
+  HomeService homeService = HomeService();
 
   CategoriesViewState categoriesState = CategoriesViewState.loading;
   ProductsViewState productsState = ProductsViewState.loading;
@@ -37,12 +41,8 @@ class HomeController extends ChangeNotifier {
 
   Future<void> getCategories() async {
     changeCategoriesState(CategoriesViewState.loading);
-    await Future.delayed(Duration(seconds: 3));
     try {
-      categories = categoriesJson.map((item) {
-        return Category.fromJson(item);
-      }).toList();
-
+      categories = await homeService.getCategory();
       changeCategoriesState(CategoriesViewState.sucess);
     } catch (e) {
       changeCategoriesState(CategoriesViewState.error);
@@ -51,11 +51,8 @@ class HomeController extends ChangeNotifier {
 
   Future<void> getProducts() async {
     changeProductsState(ProductsViewState.loading);
-    await Future.delayed(Duration(seconds: 3));
     try {
-      products = productsJson.map((item) {
-        return Product.fromJson(item);
-      }).toList();
+      products = await homeService.getProduct();
       changeProductsState(ProductsViewState.sucess);
     } catch (e) {
       changeProductsState(ProductsViewState.error);
@@ -76,7 +73,6 @@ class HomeController extends ChangeNotifier {
       }).toList();
       changeCarouselState(CarouselViewState.sucess);
     } catch (e, stackTrace) {
-      debugPrint('ERRO CAROUSEL: $e');
       debugPrintStack(stackTrace: stackTrace);
       changeCarouselState(CarouselViewState.error);
     }

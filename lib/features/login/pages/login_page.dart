@@ -6,7 +6,6 @@ import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
 import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
-import 'package:more_devs_ecommerce/features/login/exceptions/login_exceptions.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
@@ -97,8 +96,11 @@ class LoginPage extends StatelessWidget {
                                 context,
                                 HomePage.route,
                               );
-                            } on LoginException catch (e) {
-                              AppSnackBar.error(context);
+                            } catch (e) {
+                              AppSnackBar.error(
+                                context,
+                                e.toString().replaceFirst('Exception: ', ''),
+                              );
                             }
                           },
                           type: ButtonType.filled,

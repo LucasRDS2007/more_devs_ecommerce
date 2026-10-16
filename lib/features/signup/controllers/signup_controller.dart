@@ -57,7 +57,7 @@ class SignupController extends ChangeNotifier {
   Future<bool> hadleSignup() async {
     if (!(key.currentState?.validate() ?? false)) return false;
 
-    if (snackCheckError()) {
+    if (!isActiveChecked) {
       errorCheckbox = true;
       notifyListeners();
 

@@ -150,7 +150,6 @@ class SignupPage extends StatelessWidget {
                               } else if (context.mounted) {
                                 AppSnackBar.error(
                                   context,
-                                  //Exception: Nao foi possivel criar a conta. Confira os dados e tente novamente.
                                   e.toString().replaceFirst('Exception: ', ''),
                                 );
                               }

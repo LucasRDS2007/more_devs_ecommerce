@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
-import 'package:more_devs_ecommerce/shared/mocks.dart';
 
 class ProductsByCategoryController extends ChangeNotifier {
   List<Product> categoryProducts = [];
@@ -28,26 +27,26 @@ class ProductsByCategoryController extends ChangeNotifier {
     getFilteredProducts();
   }
 
-  Future<void> getProductsByCategory(String category) async {
-    changeProductsState(ProductsViewState.loading);
-    await Future.delayed(const Duration(seconds: 1));
-    try {
-      categoryProducts = productsJson
-          .where((item) {
-            return item['category'].toString().toLowerCase() ==
-                category.toLowerCase();
-          })
-          .map((item) {
-            return Product.fromJson(item);
-          })
-          .toList();
-      getBrands();
-      clearFilters();
-      changeProductsState(ProductsViewState.sucess);
-    } catch (e) {
-      changeProductsState(ProductsViewState.error);
-    }
-  }
+  // Future<void> getProductsByCategory(String category) async {
+  //   changeProductsState(ProductsViewState.loading);
+  //   await Future.delayed(const Duration(seconds: 1));
+  //   try {
+  //     categoryProducts = productsJson
+  //         .where((item) {
+  //           return item['category'].toString().toLowerCase() ==
+  //               category.toLowerCase();
+  //         })
+  //         .map((item) {
+  //           return Product.fromJson(item);
+  //         })
+  //         .toList();
+  //     getBrands();
+  //     clearFilters();
+  //     changeProductsState(ProductsViewState.sucess);
+  //   } catch (e) {
+  //     changeProductsState(ProductsViewState.error);
+  //   }
+  // }
 
   void getBrands() {
     brandsProducts = categoryProducts

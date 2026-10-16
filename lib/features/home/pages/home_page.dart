@@ -4,10 +4,12 @@ import 'package:more_devs_ecommerce/features/home/controllers/home_controller.da
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
+import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
             return Text(
-              'Olá, ${loginController.AuthUser!.name}',
+              'Olá, ${loginController.authUser!.user!.name}',
               style: AppTextStyle.title,
             );
           },
@@ -92,7 +94,14 @@ class _HomePageState extends State<HomePage> {
                   controllerViewState: homeController.productsState,
                   size: 150,
                 ),
-
+                AppElevatedButton(
+                  textButton: 'Refazer',
+                  type: ButtonType.filled,
+                  onPressed: () {
+                    homeController.getCategories();
+                    homeController.getProducts();
+                  },
+                ),
                 //Produtos
               ],
             ),

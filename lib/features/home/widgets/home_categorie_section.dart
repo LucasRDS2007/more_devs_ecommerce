@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
+import 'package:more_devs_ecommerce/features/home/data/home_data.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_card.dart';
-import 'package:more_devs_ecommerce/shared/mocks.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeCategorieSection extends StatelessWidget {

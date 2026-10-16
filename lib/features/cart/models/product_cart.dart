@@ -9,6 +9,8 @@ class ProductCart extends Product {
     required super.price,
     required super.category,
     this.quantity = 0,
+    required super.id,
+    required super.categoryId,
   });
 
   int quantity;
@@ -26,6 +28,8 @@ class ProductCart extends Product {
       price: product.price,
       category: product.category,
       quantity: 1,
+      id: '',
+      categoryId: '',
     );
   }
 }

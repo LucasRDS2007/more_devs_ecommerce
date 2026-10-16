@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
-import 'package:more_devs_ecommerce/shared/exceptions/auth_exceptions.dart';
+import 'package:more_devs_ecommerce/features/login/services/login_service.dart';
 
 class LoginController extends ChangeNotifier {
   LoginService loginService = LoginService();
@@ -36,7 +36,7 @@ class LoginController extends ChangeNotifier {
 
     changeIsLoading(true);
     try {
-      await loginService.loginUser(
+      authUser = await loginService.loginUser(
         emailController.text.trim(),
         senhaController.text.trim(),
       );

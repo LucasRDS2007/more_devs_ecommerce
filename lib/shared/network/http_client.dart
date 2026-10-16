@@ -20,16 +20,103 @@ class HttpClient {
 
   final Dio _dio;
 
-  Future<Object?> post(String path, {Object? data}) async {
+  Future<Map<String, dynamic>> get(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return _request(
+      () => _dio.get<Object?>(
+        path,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+        cancelToken: cancelToken,
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> post(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return _request(
+      () => _dio.post<Object?>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+        cancelToken: cancelToken,
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> put(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return _request(
+      () => _dio.put<Object?>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+        cancelToken: cancelToken,
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> delete(
+    String path, {
+    Object? data,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return _request(
+      () => _dio.delete<Object?>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
+        cancelToken: cancelToken,
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> _request(
+    Future<Response<Object?>> Function() call,
+  ) async {
     try {
-      final response = await _dio.post<Object?>(path, data: data);
-      return response.data;
+      final response = await call();
+      return response.data as Map<String, dynamic>;
     } on DioException catch (error) {
       throw HttpClientException(
-        message: error.message ?? 'Falha ao comunicar com o servidor.',
+        message: _messageFor(error),
         statusCode: error.response?.statusCode,
         responseData: error.response?.data,
       );
+    }
+  }
+
+  String _messageFor(DioException error) {
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return 'Tempo de conexão esgotado. Tente novamente.';
+      case DioExceptionType.connectionError:
+        return 'Sem conexão com o servidor.';
+      case DioExceptionType.cancel:
+        return 'Requisição cancelada.';
+      default:
+        return error.message ?? 'Falha ao comunicar com o servidor.';
     }
   }
 }

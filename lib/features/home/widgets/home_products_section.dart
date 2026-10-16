@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
+import 'package:more_devs_ecommerce/features/home/data/home_data.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_product_card.dart';
-import 'package:more_devs_ecommerce/shared/mocks.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeProductsSection extends StatelessWidget {
@@ -19,7 +19,7 @@ class HomeProductsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (controllerViewState == ProductsViewState.error) {
-      return Text('Problema ao exibir carrossel');
+      return Text('Problema ao exibir os produtos');
     }
     return Skeletonizer(
       enabled: controllerViewState == ProductsViewState.loading,
