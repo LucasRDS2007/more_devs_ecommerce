@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
+import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
+import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
@@ -48,70 +50,90 @@ class AppModalProductCard extends StatelessWidget {
             const SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(bottom: 16),
-              child: Consumer<CartController>(
-                builder: (context, cartController, child) {
-                  int quantity = cartController.getQuantity(product);
-                  ProductCart? productCart = cartController.validationProduct(
-                    product,
-                  );
-                  return quantity == 0
-                      ? AppElevatedButton(
-                          type: ButtonType.filled,
-                          textButton: 'Adicionar ao carrinho',
-                          onPressed: () {
-                            cartController.addProduct(product);
-                          },
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(context, CartPage.route);
-                                },
-                                child: Text(
-                                  'No Carrinho',
-                                  style: AppTextStyle.titleGrey,
+              child: Consumer<LoginController>(
+                builder: (context, loginController, child) {
+                  return Consumer<CartController>(
+                    builder: (context, cartController, child) {
+                      int quantity = cartController.getQuantity(product);
+                      ProductCart? productCart = cartController
+                          .validationProduct(product);
+                      return quantity == 0
+                          ? AppElevatedButton(
+                              type: ButtonType.filled,
+                              textButton: 'Adicionar ao carrinho',
+                              onPressed: loginController.accessToken == null
+                                  ? null
+                                  : () => cartController.addProduct(
+                                      loginController.accessToken,
+                                      product.id,
+                                    ),
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        CartPage.route,
+                                      );
+                                    },
+                                    child: Text(
+                                      'No Carrinho',
+                                      style: AppTextStyle.titleGrey,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                            Expanded(
-                              child: AppQuantitySelector(
-                                increment: () {
-                                  cartController.increment(productCart!);
-                                },
-                                decrement: () async {
-                                  if (cartController.getQuantity(
-                                        productCart!,
-                                      ) ==
-                                      1) {
-                                    final cartRemover =
-                                        await Modals.confirmationDialogAlert<
-                                          bool
-                                        >(
-                                          context,
-                                          body: AppRemoveConfirmation(
-                                            title:
-                                                'Retirar ${productCart.name} do Carrinho?',
-                                            content:
-                                                'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
-                                          ),
-                                        );
-                                    if (cartRemover == true) {
-                                      cartController.removeProduct(productCart);
-                                      cartController.decrement(productCart);
-                                    }
-                                    return;
-                                  }
-                                  cartController.decrement(productCart);
-                                },
-                                product: product,
-                                quantity: cartController.getQuantity(product),
-                              ),
-                            ),
-                          ],
-                        );
+                                Expanded(
+                                  child: AppQuantitySelector(
+                                    increment: () {
+                                      cartController.increment(productCart!);
+                                    },
+                                    decrement: () async {
+                                      final token = context
+                                          .read<LoginController>()
+                                          .accessToken;
+                                      if (token == null) return;
+
+                                      if (cartController.getQuantity(
+                                            productCart!,
+                                          ) ==
+                                          1) {
+                                        final cartRemover =
+                                            await Modals.confirmationDialogAlert<
+                                              bool
+                                            >(
+                                              context,
+                                              body: AppRemoveConfirmation(
+                                                title:
+                                                    'Retirar ${productCart.name} do Carrinho?',
+                                                content:
+                                                    'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
+                                              ),
+                                            );
+                                        if (cartRemover == true) {
+                                          cartController.removeProduct(
+                                            productCart,
+                                          );
+                                        }
+                                        return;
+                                      }
+                                      cartController.decrement(
+                                        productCart,
+                                        token: token,
+                                      );
+                                    },
+                                    product: product,
+                                    quantity: cartController.getQuantity(
+                                      product,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                    },
+                  );
                 },
               ),
             ),

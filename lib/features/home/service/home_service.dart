@@ -56,4 +56,41 @@ class HomeService {
       );
     }
   }
+
+  Future<List<Product>> getProductsByCategory({
+    required String categoryId,
+    String? sort,
+  }) async {
+    try {
+      final queryParameters = <String, dynamic>{
+        'categoryId': categoryId,
+        if (sort != null && sort.trim().isNotEmpty) 'sort': sort.trim(),
+      };
+
+      final response = await httpClient.get(
+        '/products',
+        queryParameters: queryParameters,
+      );
+
+      return (response['data'] as List)
+          .map((item) => Product.fromJson(item as Map<String, dynamic>))
+          .toList();
+    } on HttpClientException catch (error) {
+      final body = error.responseData;
+      if (body is Map) {
+        final message = body['message']?.toString();
+
+        if (message != null && message.isNotEmpty) {
+          throw Exception(message);
+        }
+      }
+
+      if (error.statusCode != null) {
+        throw Exception('Não foi possivel carregar os produtos');
+      }
+      throw Exception(
+        'Nao foi possivel conectar ao servidor. Tente novamente.',
+      );
+    }
+  }
 }

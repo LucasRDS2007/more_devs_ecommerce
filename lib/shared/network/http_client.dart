@@ -22,6 +22,7 @@ class HttpClient {
 
   Future<Map<String, dynamic>> get(
     String path, {
+    String? token,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     CancelToken? cancelToken,
@@ -30,7 +31,13 @@ class HttpClient {
       () => _dio.get<Object?>(
         path,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            ...?headers,
+            if (token != null && token.trim().isNotEmpty)
+              'Authorization': 'Bearer $token',
+          },
+        ),
         cancelToken: cancelToken,
       ),
     );
@@ -40,6 +47,7 @@ class HttpClient {
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
+    String? token,
     Map<String, dynamic>? headers,
     CancelToken? cancelToken,
   }) {
@@ -48,7 +56,13 @@ class HttpClient {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            ...?headers,
+            if (token != null && token.trim().isNotEmpty)
+              'Authorization': 'Bearer $token',
+          },
+        ),
         cancelToken: cancelToken,
       ),
     );
@@ -57,6 +71,7 @@ class HttpClient {
   Future<Map<String, dynamic>> put(
     String path, {
     Object? data,
+    String? token,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     CancelToken? cancelToken,
@@ -66,7 +81,13 @@ class HttpClient {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            ...?headers,
+            if (token != null && token.trim().isNotEmpty)
+              'Authorization': 'Bearer $token',
+          },
+        ),
         cancelToken: cancelToken,
       ),
     );
@@ -75,6 +96,7 @@ class HttpClient {
   Future<Map<String, dynamic>> delete(
     String path, {
     Object? data,
+    String? token,
     Map<String, dynamic>? queryParameters,
     Map<String, dynamic>? headers,
     CancelToken? cancelToken,
@@ -84,7 +106,13 @@ class HttpClient {
         path,
         data: data,
         queryParameters: queryParameters,
-        options: Options(headers: headers),
+        options: Options(
+          headers: {
+            ...?headers,
+            if (token != null && token.trim().isNotEmpty)
+              'Authorization': 'Bearer $token',
+          },
+        ),
         cancelToken: cancelToken,
       ),
     );

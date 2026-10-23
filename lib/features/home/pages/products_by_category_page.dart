@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
+import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
@@ -10,10 +11,10 @@ import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
 class ProductsByCategoryPage extends StatefulWidget {
-  const ProductsByCategoryPage({super.key, required this.categoryName});
+  const ProductsByCategoryPage({super.key, required this.category});
 
   static String route = '/products-by-category-page';
-  final String categoryName;
+  final Category category;
 
   @override
   State<ProductsByCategoryPage> createState() => _ProductsByCategoryPageState();
@@ -24,9 +25,9 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(((timeStamp) {
-      // context.read<ProductsByCategoryController>().getProductsByCategory(
-      //   widget.categoryName,
-      // );
+      context.read<ProductsByCategoryController>().getProductsByCategory(
+        widget.category.id,
+      );
     }));
   }
 
@@ -34,7 +35,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.categoryName, style: AppTextStyle.title),
+        title: Text(widget.category.name, style: AppTextStyle.title),
         centerTitle: true,
         actions: [
           Builder(
@@ -81,7 +82,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
               ProductsByCategorySection(
                 controllerListProducts: controller.filteredProducts,
                 controllerViewState: controller.productsState,
-                categoryName: widget.categoryName,
+                categoryName: widget.category.name,
               ),
             ],
           );

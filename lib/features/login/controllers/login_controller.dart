@@ -15,6 +15,8 @@ class LoginController extends ChangeNotifier {
 
   AuthUser? authUser;
 
+  String? get accessToken => authUser?.tokens?.accessToken;
+
   bool get isEmailValid => _emailRegex.hasMatch(emailController.text.trim());
   bool get isSenhaValid =>
       senhaController.text.trim().length >= _caracterMinimoSenha;

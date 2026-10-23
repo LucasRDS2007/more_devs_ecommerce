@@ -18,7 +18,7 @@ class HomeCategorieCard extends StatelessWidget {
           Navigator.pushNamed(
             context,
             ProductsByCategoryPage.route,
-            arguments: category.name,
+            arguments: category,
           );
         },
         child: Column(

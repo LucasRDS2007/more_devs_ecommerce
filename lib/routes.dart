@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/checkout_page.dart';
+import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/home/pages/products_by_category_page.dart';
 import 'package:more_devs_ecommerce/features/login/pages/login_page.dart';
@@ -15,8 +16,8 @@ class AppRoutes {
 
     HomePage.route: (context) => HomePage(),
     ProductsByCategoryPage.route: (context) {
-      final categoryName = ModalRoute.of(context)!.settings.arguments as String;
-      return ProductsByCategoryPage(categoryName: categoryName);
+      final category = ModalRoute.of(context)!.settings.arguments as Category;
+      return ProductsByCategoryPage(category: category);
     },
 
     CartPage.route: (context) => CartPage(),

@@ -33,10 +33,10 @@ class CheckoutPage extends StatelessWidget {
                         CartTotalCard(total: cartController.total),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: cartController.productCartList.length,
+                            itemCount: cartController.cart!.items.length,
                             itemBuilder: (BuildContext context, int index) {
                               ProductCart productCart =
-                                  cartController.productCartList[index];
+                                  cartController.cart!.items[index];
                               return Padding(
                                 padding: const EdgeInsets.all(4),
                                 child: CartLineProducts(

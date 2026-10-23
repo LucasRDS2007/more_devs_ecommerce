@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/home/data/home_data.dart';
-
 import 'package:more_devs_ecommerce/features/home/models/carousel_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';

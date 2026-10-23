@@ -9,7 +9,6 @@ import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
@@ -26,12 +25,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    super.initState();
+    AuthUser authUser = context.read<LoginController>().authUser!;
+    CartController cartController = context.read<CartController>();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<HomeController>()
         ..getCategories()
         ..getProducts()
         ..getCarouselItens();
+
+      if (cartController.cart == null) {
+        cartController.getCart(authUser.tokens!.accessToken);
+      }
     });
   }
 
@@ -94,15 +99,6 @@ class _HomePageState extends State<HomePage> {
                   controllerViewState: homeController.productsState,
                   size: 150,
                 ),
-                AppElevatedButton(
-                  textButton: 'Refazer',
-                  type: ButtonType.filled,
-                  onPressed: () {
-                    homeController.getCategories();
-                    homeController.getProducts();
-                  },
-                ),
-                //Produtos
               ],
             ),
           );
