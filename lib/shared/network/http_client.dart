@@ -11,10 +11,7 @@ class HttpClient {
               connectTimeout: const Duration(seconds: 15),
               receiveTimeout: const Duration(seconds: 15),
               sendTimeout: const Duration(seconds: 15),
-              headers: const {
-                'accept': 'application/json',
-                'content-type': 'application/json',
-              },
+              headers: const {'accept': 'application/json'},
             ),
           );
 
@@ -57,6 +54,7 @@ class HttpClient {
         data: data,
         queryParameters: queryParameters,
         options: Options(
+          contentType: Headers.jsonContentType,
           headers: {
             ...?headers,
             if (token != null && token.trim().isNotEmpty)
@@ -82,6 +80,33 @@ class HttpClient {
         data: data,
         queryParameters: queryParameters,
         options: Options(
+          contentType: data == null ? null : Headers.jsonContentType,
+          headers: {
+            ...?headers,
+            if (token != null && token.trim().isNotEmpty)
+              'Authorization': 'Bearer $token',
+          },
+        ),
+        cancelToken: cancelToken,
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>> patch(
+    String path, {
+    Object? data,
+    String? token,
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+    CancelToken? cancelToken,
+  }) {
+    return _request(
+      () => _dio.patch<Object?>(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: Options(
+          contentType: data == null ? null : Headers.jsonContentType,
           headers: {
             ...?headers,
             if (token != null && token.trim().isNotEmpty)

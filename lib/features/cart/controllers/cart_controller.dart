@@ -6,26 +6,36 @@ import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 class CartController extends ChangeNotifier {
   CartService cartService = CartService();
   Cart? cart;
+  bool isLoading = true;
+  bool isUpdating = false;
 
   void getCart(String? token) async {
+    isLoading = true;
+    notifyListeners();
+
     try {
       cart = await cartService.getCart(token);
+    } finally {
+      isLoading = false;
       notifyListeners();
-    } catch (_) {
-      notifyListeners();
-      rethrow;
     }
   }
 
   int get getProductCartQuantity {
-    return cart!.items.length;
+    return cart?.items.length ?? 0;
   }
 
   double get total {
-    return cart!.items.fold<double>(0.0, (sum, item) => sum + item.subTotal);
+    return cart?.items.fold<double>(
+          0.0,
+          (sum, item) => sum + item.subTotal,
+        ) ??
+        0.0;
   }
 
   ProductCart? validationProduct(Product product) {
+    if (cart == null) return null;
+
     ProductCart? existingProduct = cart!.items.where((item) {
       return item.name == product.name;
     }).firstOrNull;
@@ -40,41 +50,68 @@ class CartController extends ChangeNotifier {
   void addProduct(String? token, String productId) async {
     if (token == null || token.trim().isEmpty) return;
 
+    isUpdating = true;
+    notifyListeners();
     try {
       cart = await cartService.addItem(
         token: token,
         productId: productId,
         quantity: 1,
       );
+    } finally {
+      isUpdating = false;
       notifyListeners();
-    } catch (_) {
-      notifyListeners();
-      rethrow;
     }
   }
 
-  void removeProduct(ProductCart productCart) {
-    //DELETE /cart/items
-    //repopula o cart
-    cart!.items.removeAt(cart!.items.indexOf(productCart));
+  void removeProduct(String? token, String productId) async {
+    if (token == null || token.trim().isEmpty) return;
+
+    isUpdating = true;
     notifyListeners();
+    try {
+      cart = await cartService.removeItem(token: token, productId: productId);
+    } finally {
+      isUpdating = false;
+      notifyListeners();
+    }
   }
 
-  void increment(ProductCart productCart) {
-    //passar pra Api o ID do produto e a quantidade atualizada
-    productCart.quantity++;
-    cart!.items[cart!.items.indexOf(productCart)] = productCart;
+  void increment(ProductCart productCart, {required String token}) async {
+    if (token.trim().isEmpty) {
+      throw ArgumentError.value(token, 'token', 'Token invalido.');
+    }
+
+    isUpdating = true;
     notifyListeners();
+    try {
+      cart = await cartService.updateItem(
+        token: token,
+        productId: productCart.id,
+        quantity: productCart.quantity + 1,
+      );
+    } finally {
+      isUpdating = false;
+      notifyListeners();
+    }
   }
 
-  void decrement(ProductCart productCart, {required String token}) {
-    //passar pra Api o ID do produto e a quantidade atualizada
+  void decrement(ProductCart productCart, {required String token}) async {
     if (token.trim().isEmpty) {
       throw ArgumentError.value(token, 'token', 'O token não pode ser vazio.');
     }
 
-    productCart.quantity--;
-    cart!.items[cart!.items.indexOf(productCart)] = productCart;
+    isUpdating = true;
     notifyListeners();
+    try {
+      cart = await cartService.updateItem(
+        token: token,
+        productId: productCart.id,
+        quantity: productCart.quantity - 1,
+      );
+    } finally {
+      isUpdating = false;
+      notifyListeners();
+    }
   }
 }

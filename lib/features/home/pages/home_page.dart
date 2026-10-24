@@ -12,6 +12,7 @@ import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,10 +54,8 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
-            return Text(
-              'Olá, ${loginController.authUser!.user!.name}',
-              style: AppTextStyle.title,
-            );
+            final name = loginController.authUser?.user?.name;
+            return Text('Olá, $name', style: AppTextStyle.title);
           },
         ),
         actions: [
@@ -64,6 +63,17 @@ class _HomePageState extends State<HomePage> {
             builder: (context) {
               return Consumer<CartController>(
                 builder: (context, cartController, child) {
+                  if (cartController.isLoading) {
+                    return const Padding(
+                      padding: EdgeInsets.all(12),
+                      child: SizedBox(
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(strokeWidth: 3),
+                      ),
+                    );
+                  }
+
                   return Visibility(
                     replacement: AppButtonCartPage(),
                     visible: cartController.getProductCartQuantity > 0,

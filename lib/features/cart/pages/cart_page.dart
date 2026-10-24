@@ -12,6 +12,7 @@ import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_cart_empty.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_confirm_section.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_cart_loading_skeleton.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -30,7 +31,6 @@ class _CartPageState extends State<CartPage> {
     CartController cartController = context.read<CartController>();
     super.initState();
 
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       cartController.getCart(authUser.tokens!.accessToken);
     });
@@ -46,7 +46,14 @@ class _CartPageState extends State<CartPage> {
       body: SafeArea(
         child: Consumer<CartController>(
           builder: (context, cartController, child) {
-            //TODO colocar os estados de loading e de erro
+            if (cartController.isLoading) {
+              return const AppCartLoadingSkeleton();
+            }
+
+            if (cartController.cart == null) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
             if (cartController.cart!.items.isEmpty) {
               return AppSectionCartEmpty();
             }
@@ -85,7 +92,8 @@ class _CartPageState extends State<CartPage> {
 
                                       if (cartRemover == true) {
                                         cartController.removeProduct(
-                                          productCart,
+                                          token,
+                                          productCart.id,
                                         );
                                       }
                                       return;
@@ -95,10 +103,14 @@ class _CartPageState extends State<CartPage> {
                                       token: token,
                                     );
                                   },
-                            increment: () {
-                              cartController.increment(productCart);
-                            },
+                            increment: token == null
+                                ? () {}
+                                : () => cartController.increment(
+                                    productCart,
+                                    token: token,
+                                  ),
                             quantity: cartController.getQuantity(productCart),
+                            isLoading: cartController.isUpdating,
                           );
                         },
                       ),
@@ -111,6 +123,7 @@ class _CartPageState extends State<CartPage> {
                           AppElevatedButton(
                             textButton: 'Continuar',
                             type: ButtonType.filled,
+                            isLoading: cartController.isUpdating,
                             onPressed: () {
                               Navigator.of(
                                 context,

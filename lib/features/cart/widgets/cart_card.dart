@@ -12,11 +12,13 @@ class CartCard extends StatelessWidget {
     required this.increment,
     required this.decrement,
     required this.quantity,
+    this.isLoading = false,
   });
   final ProductCart productCart;
   final VoidCallback increment;
   final VoidCallback decrement;
   final int quantity;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +85,7 @@ class CartCard extends StatelessWidget {
                     increment: increment,
                     decrement: decrement,
                     quantity: quantity,
+                    isLoading: isLoading,
                   ),
                 ],
               ),

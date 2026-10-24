@@ -58,4 +58,64 @@ class CartService {
       );
     }
   }
+
+  Future<Cart> updateItem({
+    required String productId,
+    required int quantity,
+    required String token,
+  }) async {
+    try {
+      final response = await httpClient.patch(
+        '/cart/items/$productId',
+        token: token,
+        data: {'quantity': quantity},
+      );
+      return Cart.fromJson(response);
+    } on HttpClientException catch (error) {
+      final body = error.responseData;
+      if (body is Map) {
+        final message = body['message']?.toString();
+
+        if (message != null && message.isNotEmpty) {
+          throw Exception(message);
+        }
+      }
+
+      if (error.statusCode != null) {
+        throw Exception('Nao foi possivel atualizar o produto no carrinho.');
+      }
+      throw Exception(
+        'Nao foi possivel conectar ao servidor. Tente novamente.',
+      );
+    }
+  }
+
+  Future<Cart> removeItem({
+    required String productId,
+    required String token,
+  }) async {
+    try {
+      final response = await httpClient.delete(
+        '/cart/items/$productId',
+        token: token,
+      );
+      return Cart.fromJson(response);
+    } on HttpClientException catch (error) {
+      final body = error.responseData;
+      if (body is Map) {
+        final message = body['message']?.toString();
+
+        if (message != null && message.isNotEmpty) {
+          throw Exception(message);
+        }
+      }
+
+      if (error.statusCode != null) {
+        throw Exception('NÃ£o foi possÃ­vel remover o produto do carrinho.');
+      }
+      throw Exception(
+        'NÃ£o foi possÃ­vel conectar ao servidor. Tente novamente.',
+      );
+    }
+  }
 }

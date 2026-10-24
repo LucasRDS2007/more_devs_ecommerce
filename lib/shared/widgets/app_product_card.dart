@@ -18,12 +18,14 @@ class AppProductCard extends StatelessWidget {
         Modals.appBottomSheet(context, AppModalProductCard(product: product));
       },
       child: Container(
+        width: 160,
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+        // color: Colors.amber,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Skeleton.replace(
-              width: width,
+              // width: width,
               height: 160,
               replacement: Bone.square(
                 size: 160,
@@ -46,7 +48,13 @@ class AppProductCard extends StatelessWidget {
                 style: AppTextStyle.smallGrey,
               ),
             ),
-            Text(product.name.toString(), style: AppTextStyle.subTitle),
+            Text(
+              product.name.toString(),
+              style: AppTextStyle.subTitle,
+              maxLines: 1,
+
+              overflow: TextOverflow.ellipsis,
+            ),
             Text(
               Utils.formatCurrency(product.price),
               style: AppTextStyle.title,

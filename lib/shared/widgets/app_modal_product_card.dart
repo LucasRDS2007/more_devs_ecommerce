@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
-import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
+import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
@@ -46,7 +46,10 @@ class AppModalProductCard extends StatelessWidget {
 
             Text(product.description, style: AppTextStyle.smallBlack),
             const SizedBox(height: 10),
-            Text('R\$${product.price.toString()}', style: AppTextStyle.price),
+            Text(
+              Utils.formatCurrency(product.price),
+              style: AppTextStyle.price,
+            ),
             const SizedBox(height: 10),
             Padding(
               padding: EdgeInsets.only(bottom: 16),
@@ -61,7 +64,10 @@ class AppModalProductCard extends StatelessWidget {
                           ? AppElevatedButton(
                               type: ButtonType.filled,
                               textButton: 'Adicionar ao carrinho',
-                              onPressed: loginController.accessToken == null
+                              isLoading: cartController.isUpdating,
+                              onPressed:
+                                  loginController.accessToken == null ||
+                                      cartController.isUpdating
                                   ? null
                                   : () => cartController.addProduct(
                                       loginController.accessToken,
@@ -88,7 +94,15 @@ class AppModalProductCard extends StatelessWidget {
                                 Expanded(
                                   child: AppQuantitySelector(
                                     increment: () {
-                                      cartController.increment(productCart!);
+                                      final token = context
+                                          .read<LoginController>()
+                                          .accessToken;
+                                      if (token == null) return;
+
+                                      cartController.increment(
+                                        productCart!,
+                                        token: token,
+                                      );
                                     },
                                     decrement: () async {
                                       final token = context
@@ -114,7 +128,8 @@ class AppModalProductCard extends StatelessWidget {
                                             );
                                         if (cartRemover == true) {
                                           cartController.removeProduct(
-                                            productCart,
+                                            token,
+                                            productCart.id,
                                           );
                                         }
                                         return;
@@ -128,6 +143,7 @@ class AppModalProductCard extends StatelessWidget {
                                     quantity: cartController.getQuantity(
                                       product,
                                     ),
+                                    isLoading: cartController.isUpdating,
                                   ),
                                 ),
                               ],
