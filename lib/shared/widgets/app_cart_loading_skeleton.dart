@@ -7,7 +7,7 @@ import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AppCartLoadingSkeleton extends StatelessWidget {
-  const AppCartLoadingSkeleton();
+  const AppCartLoadingSkeleton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,8 @@ class AppCartLoadingSkeleton extends StatelessWidget {
                 AppElevatedButton(
                   textButton: 'Continuar',
                   type: ButtonType.filled,
-                  onPressed: () {},
+                  //TODO: Corrigir Checkout
+                  onPressed: () {}, buttonAnalytics: ButtonAnalytics(null, null),
                 ),
               ],
             ),

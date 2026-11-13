@@ -128,7 +128,7 @@ class _CartPageState extends State<CartPage> {
                               Navigator.of(
                                 context,
                               ).pushNamed(CheckoutPage.route);
-                            },
+                            }, buttonAnalytics: ButtonAnalytics('begin_checkout', CartPage.route),
                           ),
                         ],
                       ),

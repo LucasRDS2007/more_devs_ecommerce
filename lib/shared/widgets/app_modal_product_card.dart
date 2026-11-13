@@ -72,7 +72,7 @@ class AppModalProductCard extends StatelessWidget {
                                   : () => cartController.addProduct(
                                       loginController.accessToken,
                                       product.id,
-                                    ),
+                                    ), buttonAnalytics: ButtonAnalytics('Adicionar ao Carrinho', 'Modal Produto'),
                             )
                           : Row(
                               crossAxisAlignment: CrossAxisAlignment.center,

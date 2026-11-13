@@ -5,6 +5,7 @@ import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
@@ -12,7 +13,6 @@ import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_exit_dialog.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_title.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,9 +23,10 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AnalyticsMixin<HomePage> {
   @override
   void initState() {
+    super.initState();
     AuthUser authUser = context.read<LoginController>().authUser!;
     CartController cartController = context.read<CartController>();
 
@@ -90,30 +91,36 @@ class _HomePageState extends State<HomePage> {
       body: Consumer<HomeController>(
         builder: (context, homeController, child) {
           return SafeArea(
-            child: Column(
-              children: [
-                AppCarousel(
-                  controllerChangeIndex: homeController.changeCarouselIndex,
-                  controllerIndex: homeController.activeIndex,
-                  controllerCarouselViewState: homeController.carouselState,
-                  controllerCarouselItens: homeController.carouselItens,
-                ),
-                AppSectionTitle(title: 'Categorias'),
-                HomeCategorieSection(
-                  controllerViewState: homeController.categoriesState,
-                  controllerListCategories: homeController.categories,
-                ),
-                AppSectionTitle(title: 'Produtos'),
-                HomeProductsSection(
-                  controllerListProducts: homeController.products,
-                  controllerViewState: homeController.productsState,
-                  size: 150,
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  AppCarousel(
+                    controllerChangeIndex: homeController.changeCarouselIndex,
+                    controllerIndex: homeController.activeIndex,
+                    controllerCarouselViewState: homeController.carouselState,
+                    controllerCarouselItens: homeController.carouselItens,
+                  ),
+                  AppSectionTitle(title: 'Categorias'),
+                  HomeCategorieSection(
+                    controllerViewState: homeController.categoriesState,
+                    controllerListCategories: homeController.categories,
+                  ),
+                  AppSectionTitle(title: 'Produtos'),
+                  HomeProductsSection(
+                    controllerListProducts: homeController.products,
+                    controllerViewState: homeController.productsState,
+                    size: 150,
+                  ),
+                ],
+              ),
             ),
           );
         },
       ),
     );
   }
+
+  @override
+  // TODO: implement screenName
+  String get screenName => HomePage.route;
 }

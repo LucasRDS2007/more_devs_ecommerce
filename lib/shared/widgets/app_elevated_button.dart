@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/shared/analytics/app_analytics.dart';
 import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 
 enum ButtonType { filled, outlined }
 
-class AppElevatedButton extends StatelessWidget {
+class ButtonAnalytics{
+  final String? buttonName;
+  final String? screenName;
+  ButtonAnalytics(this.buttonName, this.screenName);
+}
+
+class AppElevatedButton extends StatefulWidget {
   const AppElevatedButton({
     super.key,
     required this.textButton,
     required this.type,
     required this.onPressed,
-    this.isLoading = false,
+    this.isLoading = false, this.buttonAnalytics,
   });
 
   final String textButton;
   final VoidCallback? onPressed;
+  final ButtonAnalytics? buttonAnalytics;
   final bool isLoading;
-
   final ButtonType type;
 
+  @override
+  State<AppElevatedButton> createState() => _AppElevatedButtonState();
+}
+
+class _AppElevatedButtonState extends State<AppElevatedButton> {
   ButtonStyle _getButtonStyle() {
-    switch (type) {
+    switch (widget.type) {
       case ButtonType.filled:
         return ElevatedButton.styleFrom(
           minimumSize: Size.fromHeight(48),
@@ -48,9 +60,20 @@ class AppElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: widget.onPressed == null
+          ? null
+          : () {
+              final analytics = widget.buttonAnalytics;
+              if (analytics != null && analytics.buttonName != null) {
+                AppAnalytics.instance.logButtonClick(
+                  analytics.buttonName!,
+                  screenName: analytics.screenName,
+                );
+              }
+              widget.onPressed!();
+            },
       style: _getButtonStyle(),
-      child: isLoading
+      child: widget.isLoading
           ? SizedBox(
               height: 20,
               width: 20,
@@ -59,7 +82,7 @@ class AppElevatedButton extends StatelessWidget {
                 strokeWidth: 3,
               ),
             )
-          : Text(textButton),
+          : Text(widget.textButton),
     );
   }
 }

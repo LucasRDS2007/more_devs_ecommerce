@@ -30,14 +30,14 @@ class AppRemoveConfirmation extends StatelessWidget {
               child: AppElevatedButton(
                 textButton: 'Não',
                 type: ButtonType.outlined,
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () => Navigator.pop(context, false), buttonAnalytics: null,
               ),
             ),
             Expanded(
               child: AppElevatedButton(
                 textButton: 'Sim',
                 type: ButtonType.filled,
-                onPressed: () => Navigator.pop(context, true),
+                onPressed: () => Navigator.pop(context, true), buttonAnalytics: ButtonAnalytics('Remover Produto do Carrinho', 'Dialog Remoção de Produto'),
               ),
             ),
           ],

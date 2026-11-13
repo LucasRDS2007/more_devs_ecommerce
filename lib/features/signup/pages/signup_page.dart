@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
@@ -9,11 +10,16 @@ import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
 import 'package:provider/provider.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
   static String route = '/signup';
 
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> with AnalyticsMixin<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,7 +162,8 @@ class SignupPage extends StatelessWidget {
                             }
                           },
                           textButton: 'Continuar',
-                          isLoading: controller.isLoading,
+                          //TODO corrigir
+                          isLoading: controller.isLoading, buttonAnalytics: null,
                         ),
                       ],
                     ),
@@ -169,4 +176,8 @@ class SignupPage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  // TODO: implement screenName
+  String get screenName => SignupPage.route;
 }

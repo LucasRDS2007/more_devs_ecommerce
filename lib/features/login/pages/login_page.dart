@@ -4,6 +4,7 @@ import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';
@@ -11,10 +12,19 @@ import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_text_field.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   static String route = '/login';
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with AnalyticsMixin<LoginPage> {
+  @override
+  String get screenName => LoginPage.route;
+
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +106,14 @@ class LoginPage extends StatelessWidget {
                                 context,
                                 HomePage.route,
                               );
+                              login('email');
                             } catch (e) {
+                              String erro = e.toString().replaceFirst('Exception: ', '');
+                              loginFailed(erro);
                               AppSnackBar.error(
                                 context,
-                                e.toString().replaceFirst('Exception: ', ''),
+                                erro,
+                                
                               );
                             }
                           },
@@ -125,7 +139,7 @@ class LoginPage extends StatelessWidget {
                             }
                           },
                           type: ButtonType.outlined,
-                          textButton: 'Cadastrar-se',
+                          textButton: 'Cadastrar-se', buttonAnalytics: null,
                         ),
 
                         Spacer(flex: 2),

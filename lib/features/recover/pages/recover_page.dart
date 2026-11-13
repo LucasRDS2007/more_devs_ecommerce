@@ -56,7 +56,7 @@ class _RecoverPageState extends State<RecoverPage> {
                                   MobileSnackBarPosition.bottom,
                             ).show(context);
                           }
-                        : null,
+                        : null, buttonAnalytics: ButtonAnalytics('Enviar Codigo', RecoverPage.route),
                   ),
                 ],
               ),

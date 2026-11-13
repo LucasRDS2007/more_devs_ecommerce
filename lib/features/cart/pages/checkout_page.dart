@@ -61,7 +61,7 @@ class CheckoutPage extends StatelessWidget {
                       AppElevatedButton(
                         textButton: 'Confirmar Pedido',
                         type: ButtonType.filled,
-                        onPressed: () {},
+                        onPressed: () {}, buttonAnalytics: ButtonAnalytics('purchase', CheckoutPage.route),
                       ),
                     ],
                   ),

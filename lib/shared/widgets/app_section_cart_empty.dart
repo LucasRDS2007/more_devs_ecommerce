@@ -26,7 +26,7 @@ class AppSectionCartEmpty extends StatelessWidget {
             type: ButtonType.filled,
             onPressed: () {
               Navigator.pop(context);
-            },
+            }, buttonAnalytics: ButtonAnalytics('Voltar as Compras', '/cart'),
           ),
         ],
       ),

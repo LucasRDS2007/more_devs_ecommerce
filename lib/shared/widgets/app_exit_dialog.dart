@@ -32,7 +32,7 @@ class AppExitDialog extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 textButton: 'Não',
-                type: ButtonType.outlined,
+                type: ButtonType.outlined, buttonAnalytics: null,
               ),
             ),
             Expanded(
@@ -42,7 +42,7 @@ class AppExitDialog extends StatelessWidget {
                   exit(0);
                 },
                 textButton: 'Sim',
-                type: ButtonType.filled,
+                type: ButtonType.filled, buttonAnalytics: ButtonAnalytics('Sair', 'Dialog Sair do APP'),
               ),
             ),
           ],
