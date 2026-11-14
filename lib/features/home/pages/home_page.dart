@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> with AnalyticsMixin<HomePage> {
                   HomeProductsSection(
                     controllerListProducts: homeController.products,
                     controllerViewState: homeController.productsState,
-                    size: 150,
+                    size: 150, screenName: screenName,
                   ),
                 ],
               ),
@@ -121,6 +121,5 @@ class _HomePageState extends State<HomePage> with AnalyticsMixin<HomePage> {
   }
 
   @override
-  // TODO: implement screenName
   String get screenName => HomePage.route;
 }

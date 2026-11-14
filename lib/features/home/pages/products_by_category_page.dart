@@ -1,8 +1,10 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
@@ -20,7 +22,7 @@ class ProductsByCategoryPage extends StatefulWidget {
   State<ProductsByCategoryPage> createState() => _ProductsByCategoryPageState();
 }
 
-class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
+class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> with AnalyticsMixin<ProductsByCategoryPage> {
   @override
   void initState() {
     super.initState();
@@ -28,6 +30,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
       context.read<ProductsByCategoryController>().getProductsByCategory(
         widget.category.id,
       );
+      viewItemList(widget.category.name);
     }));
   }
 
@@ -65,6 +68,9 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
                   hintText: 'Rabanete',
                   onChanged: (value) {
                     controller.setSearchQuery(value);
+                    EasyDebounce.debounce('searchAnalytics', Duration(seconds: 1),() {
+                      search(value, widget.category.name, controller.filteredProducts.length.toString());
+                    }, );
                   },
                 ),
               ),
@@ -82,7 +88,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
               ProductsByCategorySection(
                 controllerListProducts: controller.filteredProducts,
                 controllerViewState: controller.productsState,
-                categoryName: widget.category.name,
+                categoryName: widget.category.name, screenName: '',
               ),
             ],
           );
@@ -90,4 +96,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
       ),
     );
   }
+
+  @override
+  String get screenName => ProductsByCategoryPage.route;
 }

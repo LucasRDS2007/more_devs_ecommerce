@@ -10,12 +10,13 @@ class ProductsByCategorySection extends StatelessWidget {
     super.key,
     required this.controllerListProducts,
     required this.controllerViewState,
-    required this.categoryName,
+    required this.categoryName, required this.screenName,
   });
 
   final List<Product> controllerListProducts;
   final ProductsViewState controllerViewState;
   final String categoryName;
+  final String screenName;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class ProductsByCategorySection extends StatelessWidget {
             itemCount: _getProductsList().length,
             itemBuilder: (context, index) {
               Product product = _getProductsList()[index];
-              return AppProductCard(product: product);
+              return AppProductCard(product: product, screenName: screenName,);
             },
             gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: MediaQuery.of(context).size.width / 2,

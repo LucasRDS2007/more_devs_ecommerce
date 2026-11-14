@@ -7,15 +7,16 @@ import 'package:more_devs_ecommerce/shared/widgets/app_modal_product_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AppProductCard extends StatelessWidget {
-  const AppProductCard({super.key, required this.product, this.width});
+  const AppProductCard({super.key, required this.product, this.width, required this.screenName});
   final Product product;
   final double? width;
+  final String screenName;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Modals.appBottomSheet(context, AppModalProductCard(product: product));
+        Modals.appBottomSheet(context, AppModalProductCard(product: product, screenName: screenName,));
       },
       child: Container(
         width: 160,

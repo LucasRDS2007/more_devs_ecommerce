@@ -46,8 +46,7 @@ class AppCartLoadingSkeleton extends StatelessWidget {
                 AppElevatedButton(
                   textButton: 'Continuar',
                   type: ButtonType.filled,
-                  //TODO: Corrigir Checkout
-                  onPressed: () {}, buttonAnalytics: ButtonAnalytics(null, null),
+                  onPressed: () {}, buttonAnalytics: null,
                 ),
               ],
             ),

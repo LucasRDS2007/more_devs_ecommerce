@@ -15,28 +15,15 @@ class AppAnalytics {
   _debugLog('screen_view', {'screen_name': screenName});
   return _firebase.logScreenView(screenName: screenName);
  }
-
-
-  Future<void> logButtonClick(String buttonName, {String? screenName}){
-    final parameters = <String, Object>{
-      'button_name': buttonName,
-      if(screenName != null) 'screen_name': screenName,
-    };
-    _debugLog('button_click', parameters);
-    return _firebase.logEvent(name: 'button_click', parameters: parameters);
-  }
-
   Future<void> sendEvent(String event, {String? screenName, Map<String, Object>? parametersEvent}){
     final parameters = <String, Object>{
-      'event': event,
       if(screenName != null) 'screen_name': screenName,
-
     };
     if (parametersEvent != null){
       parameters.addAll(parametersEvent);
     }
-    _debugLog('send_event', parameters);
-    return _firebase.logEvent(name: 'button_click', parameters: parameters);
+    _debugLog(event, parameters);
+    return _firebase.logEvent(name: event, parameters: parameters);
   }
 
   void _debugLog(String eventName, Map<String, Object> parameters){

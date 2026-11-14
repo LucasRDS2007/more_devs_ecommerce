@@ -47,6 +47,7 @@ class _RecoverPageState extends State<RecoverPage> {
                   AppElevatedButton(
                     textButton: 'Continuar',
                     type: ButtonType.filled,
+                    buttonAnalytics: ButtonAnalytics('password_reset_request', RecoverPage.route),
                     onPressed: recoverController.isActiveButton
                         ? () {
                             AnimatedSnackBar.material(
@@ -56,7 +57,7 @@ class _RecoverPageState extends State<RecoverPage> {
                                   MobileSnackBarPosition.bottom,
                             ).show(context);
                           }
-                        : null, buttonAnalytics: ButtonAnalytics('Enviar Codigo', RecoverPage.route),
+                        : null,
                   ),
                 ],
               ),

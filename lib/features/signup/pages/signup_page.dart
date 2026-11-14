@@ -136,34 +136,39 @@ class _SignupPageState extends State<SignupPage> with AnalyticsMixin<SignupPage>
                         SizedBox(height: 16),
                         AppElevatedButton(
                           type: ButtonType.filled,
-                          onPressed: () async {
-                            try {
-                              final registered = await controller.hadleSignup();
-                              if (registered && context.mounted) {
-                                AppSnackBar.success(
-                                  context,
-                                  'Conta criada com sucesso.',
-                                );
-                              }
-                            } catch (e) {
-                              if (e is ErrorDescription) {
-                                if (context.mounted) {
-                                  AppSnackBar.error(
-                                    context,
-                                    'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
-                                  );
+                          onPressed: controller.isFormValid
+                              ? () async {
+                                  try {
+                                    final registered =
+                                        await controller.hadleSignup();
+                                    if (registered && context.mounted) {
+                                      AppSnackBar.success(
+                                        context,
+                                        'Conta criada com sucesso.',
+                                      );
+                                      signup('email');
+                                    }
+                                  } catch (e) {
+                                    if (e is ErrorDescription) {
+                                      if (context.mounted) {
+                                        AppSnackBar.error(
+                                          context,
+                                          'Confirme os Termos de Serviço e a Política de Privacidade para continuar.',
+                                        );
+                                      }
+                                    } else if (context.mounted) {
+                                      String erro = e.toString().replaceFirst(
+                                        'Exception: ',
+                                        '',
+                                      );
+                                      AppSnackBar.error(context, erro);
+                                      signupFailed(erro);
+                                    }
+                                  }
                                 }
-                              } else if (context.mounted) {
-                                AppSnackBar.error(
-                                  context,
-                                  e.toString().replaceFirst('Exception: ', ''),
-                                );
-                              }
-                            }
-                          },
+                              : null,
                           textButton: 'Continuar',
-                          //TODO corrigir
-                          isLoading: controller.isLoading, buttonAnalytics: null,
+                          isLoading: controller.isLoading,
                         ),
                       ],
                     ),
@@ -178,6 +183,5 @@ class _SignupPageState extends State<SignupPage> with AnalyticsMixin<SignupPage>
   }
 
   @override
-  // TODO: implement screenName
   String get screenName => SignupPage.route;
 }

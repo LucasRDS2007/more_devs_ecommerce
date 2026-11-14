@@ -10,11 +10,12 @@ class HomeProductsSection extends StatelessWidget {
     super.key,
     required this.controllerListProducts,
     required this.controllerViewState,
-    this.size,
+    this.size, required this.screenName,
   });
   final double? size;
   final List<Product> controllerListProducts;
   final ProductsViewState controllerViewState;
+  final String screenName;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class HomeProductsSection extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             Product product = _getProductsList()[index];
-            return AppProductCard(product: product, width: size);
+            return AppProductCard(product: product, width: size, screenName: screenName,);
           },
         ),
       ),

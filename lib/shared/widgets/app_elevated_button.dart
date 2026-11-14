@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:more_devs_ecommerce/shared/analytics/app_analytics.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_colors.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 
 enum ButtonType { filled, outlined }
 
 class ButtonAnalytics{
-  final String? buttonName;
+  final String buttonName;
   final String? screenName;
-  ButtonAnalytics(this.buttonName, this.screenName);
+  final Map<String, Object>? parameters;
+  ButtonAnalytics(this.buttonName, this.screenName, {  this.parameters});
 }
 
 class AppElevatedButton extends StatefulWidget {
@@ -30,7 +31,7 @@ class AppElevatedButton extends StatefulWidget {
   State<AppElevatedButton> createState() => _AppElevatedButtonState();
 }
 
-class _AppElevatedButtonState extends State<AppElevatedButton> {
+class _AppElevatedButtonState extends State<AppElevatedButton> with AnalyticsMixin<AppElevatedButton>{
   ButtonStyle _getButtonStyle() {
     switch (widget.type) {
       case ButtonType.filled:
@@ -64,11 +65,11 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
           ? null
           : () {
               final analytics = widget.buttonAnalytics;
-              if (analytics != null && analytics.buttonName != null) {
-                AppAnalytics.instance.logButtonClick(
-                  analytics.buttonName!,
-                  screenName: analytics.screenName,
-                );
+              if (analytics != null ) {
+               logButtonClick(
+                  analytics.buttonName,
+                  analytics.parameters
+               );
               }
               widget.onPressed!();
             },
@@ -85,4 +86,8 @@ class _AppElevatedButtonState extends State<AppElevatedButton> {
           : Text(widget.textButton),
     );
   }
+
+  @override
+  // TODO: implement screenName
+  String get screenName => widget.buttonAnalytics?.screenName ?? '';
 }

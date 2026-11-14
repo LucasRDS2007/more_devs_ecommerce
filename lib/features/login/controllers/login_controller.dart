@@ -15,11 +15,18 @@ class LoginController extends ChangeNotifier {
 
   AuthUser? authUser;
 
+  LoginController() {
+    emailController.addListener(notifyListeners);
+    senhaController.addListener(notifyListeners);
+  }
+
   String? get accessToken => authUser?.tokens?.accessToken;
 
   bool get isEmailValid => _emailRegex.hasMatch(emailController.text.trim());
   bool get isSenhaValid =>
       senhaController.text.trim().length >= _caracterMinimoSenha;
+
+  bool get isFormValid => isEmailValid && isSenhaValid;
 
   void changeActiveCheckbox() {
     isActiveCheckBox = !isActiveCheckBox;
@@ -33,7 +40,7 @@ class LoginController extends ChangeNotifier {
 
   Future<void> handleLogin() async {
     if (!key.currentState!.validate()) {
-      return;
+      throw Exception('Campos invalidos');
     }
 
     changeIsLoading(true);
@@ -54,7 +61,9 @@ class LoginController extends ChangeNotifier {
     if (isEmailValid) {
       return null;
     }
+   
     return 'Email inválido';
+    
   }
 
   String? validateSenha(String? value) {
@@ -62,5 +71,12 @@ class LoginController extends ChangeNotifier {
       return null;
     }
     return 'Senha invalida';
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    senhaController.dispose();
+    super.dispose();
   }
 }

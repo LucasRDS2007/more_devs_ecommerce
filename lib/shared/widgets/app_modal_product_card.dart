@@ -4,19 +4,26 @@ import 'package:more_devs_ecommerce/features/cart/models/product_cart.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/product_models.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/shared/utils.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_quantity_selector.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_remove_product_confirmation_dialog.dart';
 import 'package:provider/provider.dart';
 
-class AppModalProductCard extends StatelessWidget {
-  const AppModalProductCard({super.key, required this.product});
+class AppModalProductCard extends StatefulWidget {
+  const AppModalProductCard({super.key, required this.product, required this.screenName});
 
   final Product product;
+  final String screenName;
 
+  @override
+  State<AppModalProductCard> createState() => _AppModalProductCardState();
+}
+
+class _AppModalProductCardState extends State<AppModalProductCard> with AnalyticsMixin<AppModalProductCard>{
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -33,21 +40,21 @@ class AppModalProductCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: NetworkImage(product.imageUrl.toString()),
+                    image: NetworkImage(widget.product.imageUrl.toString()),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 15),
-            Text(product.name, style: AppTextStyle.title),
+            Text(widget.product.name, style: AppTextStyle.title),
 
-            Text(product.brand, style: AppTextStyle.smallGrey),
+            Text(widget.product.brand, style: AppTextStyle.smallGrey),
 
-            Text(product.description, style: AppTextStyle.smallBlack),
+            Text(widget.product.description, style: AppTextStyle.smallBlack),
             const SizedBox(height: 10),
             Text(
-              Utils.formatCurrency(product.price),
+              Utils.formatCurrency(widget.product.price),
               style: AppTextStyle.price,
             ),
             const SizedBox(height: 10),
@@ -57,11 +64,12 @@ class AppModalProductCard extends StatelessWidget {
                 builder: (context, loginController, child) {
                   return Consumer<CartController>(
                     builder: (context, cartController, child) {
-                      int quantity = cartController.getQuantity(product);
+                      int quantity = cartController.getQuantity(widget.product);
                       ProductCart? productCart = cartController
-                          .validationProduct(product);
+                          .validationProduct(widget.product);
                       return quantity == 0
                           ? AppElevatedButton(
+
                               type: ButtonType.filled,
                               textButton: 'Adicionar ao carrinho',
                               isLoading: cartController.isUpdating,
@@ -71,8 +79,8 @@ class AppModalProductCard extends StatelessWidget {
                                   ? null
                                   : () => cartController.addProduct(
                                       loginController.accessToken,
-                                      product.id,
-                                    ), buttonAnalytics: ButtonAnalytics('Adicionar ao Carrinho', 'Modal Produto'),
+                                      widget.product.id,
+                                    ), buttonAnalytics: ButtonAnalytics('add_to_cart', screenName, parameters: {'item_name': productCart!.name, 'item_brand': productCart.brand, 'item_category': productCart.category, 'quantity': '1' , 'price': productCart.price.toString(), 'currency': 'BRL',} ),
                             )
                           : Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,11 +127,11 @@ class AppModalProductCard extends StatelessWidget {
                                               bool
                                             >(
                                               context,
-                                              body: AppRemoveConfirmation(
+                                              body: AppRemoveProductConfirmationDialog(
                                                 title:
                                                     'Retirar ${productCart.name} do Carrinho?',
                                                 content:
-                                                    'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
+                                                    'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.', product: productCart, screenName: screenName,
                                               ),
                                             );
                                         if (cartRemover == true) {
@@ -139,9 +147,9 @@ class AppModalProductCard extends StatelessWidget {
                                         token: token,
                                       );
                                     },
-                                    product: product,
+                                    product: widget.product,
                                     quantity: cartController.getQuantity(
-                                      product,
+                                      widget.product,
                                     ),
                                     isLoading: cartController.isUpdating,
                                   ),
@@ -158,4 +166,7 @@ class AppModalProductCard extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  String get screenName => widget.screenName;
 }

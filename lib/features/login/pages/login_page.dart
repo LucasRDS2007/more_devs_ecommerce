@@ -98,25 +98,26 @@ class _LoginPageState extends State<LoginPage> with AnalyticsMixin<LoginPage> {
                           ),
                         ),
                         AppElevatedButton(
-                          onPressed: () async {
-                            try {
-                              await controller.handleLogin();
-                              if (!context.mounted) return;
-                              Navigator.popAndPushNamed(
-                                context,
-                                HomePage.route,
-                              );
-                              login('email');
-                            } catch (e) {
-                              String erro = e.toString().replaceFirst('Exception: ', '');
-                              loginFailed(erro);
-                              AppSnackBar.error(
-                                context,
-                                erro,
-                                
-                              );
-                            }
-                          },
+                          onPressed: controller.isFormValid
+                              ? () async {
+                                  try {
+                                    await controller.handleLogin();
+                                    if (!context.mounted) return;
+                                    Navigator.popAndPushNamed(
+                                      context,
+                                      HomePage.route,
+                                    );
+                                    login('email');
+                                  } catch (e) {
+                                    String erro = e.toString().replaceFirst(
+                                      'Exception: ',
+                                      '',
+                                    );
+                                    loginFailed(erro);
+                                    AppSnackBar.error(context, erro);
+                                  }
+                                }
+                              : null,
                           type: ButtonType.filled,
                           textButton: 'Entrar',
                           isLoading: controller.isLoading,

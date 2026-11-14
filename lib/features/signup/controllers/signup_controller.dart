@@ -3,7 +3,10 @@ import 'package:more_devs_ecommerce/features/signup/services/signup_service.dart
 
 class SignupController extends ChangeNotifier {
   SignupController({SignupService? signupService})
-    : _signupService = signupService ?? SignupService();
+    : _signupService = signupService ?? SignupService() {
+    emailController.addListener(notifyListeners);
+    nomeController.addListener(notifyListeners);
+  }
 
   final SignupService _signupService;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
@@ -43,6 +46,13 @@ class SignupController extends ChangeNotifier {
       isSenhaMaiusculo &&
       isSenhaMinusculo &&
       isSenhaCaracterEspecial;
+
+  bool get isFormValid =>
+      isEmailValid &&
+      isNomeValid &&
+      isSenhaValid &&
+      isConfirmedSenha &&
+      isActiveChecked;
 
   List<Map<String, bool>> getPasswordRequirements() {
     return [

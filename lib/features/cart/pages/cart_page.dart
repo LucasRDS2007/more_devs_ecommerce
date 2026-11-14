@@ -5,11 +5,12 @@ import 'package:more_devs_ecommerce/features/cart/pages/checkout_page.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_total_card.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
+import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_card.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';
-import 'package:more_devs_ecommerce/shared/widgets/app_remove_confirmation.dart';
+import 'package:more_devs_ecommerce/shared/widgets/app_remove_product_confirmation_dialog.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_section_cart_empty.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_confirm_section.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_cart_loading_skeleton.dart';
@@ -24,7 +25,7 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _CartPageState extends State<CartPage> with AnalyticsMixin<CartPage>{
   @override
   void initState() {
     AuthUser authUser = context.read<LoginController>().authUser!;
@@ -82,11 +83,11 @@ class _CartPageState extends State<CartPage> {
                                             bool
                                           >(
                                             context,
-                                            body: AppRemoveConfirmation(
+                                            body: AppRemoveProductConfirmationDialog(
                                               title:
                                                   'Retirar ${productCart.name} do Carrinho?',
                                               content:
-                                                  'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.',
+                                                  'Tem certeza que deseja retirar ${productCart.name} do carrinho? Essa ação não pode ser desfeita.', product: productCart, screenName: screenName,
                                             ),
                                           );
 
@@ -142,4 +143,7 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
+
+  @override
+  String get screenName => CartPage.route;
 }
