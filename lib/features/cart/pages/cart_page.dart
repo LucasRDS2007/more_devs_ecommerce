@@ -5,7 +5,7 @@ import 'package:more_devs_ecommerce/features/cart/pages/checkout_page.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_total_card.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
-import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
+import 'package:more_devs_ecommerce/shared/services/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/modals.dart';
 import 'package:more_devs_ecommerce/features/cart/widgets/cart_card.dart';

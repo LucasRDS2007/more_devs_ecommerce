@@ -4,7 +4,7 @@ import 'package:more_devs_ecommerce/features/home/pages/home_page.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/recover/pages/recover_page.dart';
 import 'package:more_devs_ecommerce/features/signup/pages/signup_page.dart';
-import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
+import 'package:more_devs_ecommerce/shared/services/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_checkbox.dart';

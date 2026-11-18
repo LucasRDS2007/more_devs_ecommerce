@@ -3,10 +3,10 @@ import 'dart:developer' as developer;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-class AppAnalytics {
-  AppAnalytics._();
+class AppAnalyticsService {
+  AppAnalyticsService._();
 
-  static final AppAnalytics instance = AppAnalytics._();
+  static final AppAnalyticsService instance = AppAnalyticsService._();
 
   FirebaseAnalytics get _firebase => FirebaseAnalytics.instance;
 

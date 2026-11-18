@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
-import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
+import 'package:more_devs_ecommerce/shared/services/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_snack_bar.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_elevated_button.dart';

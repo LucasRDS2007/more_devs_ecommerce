@@ -5,8 +5,9 @@ import 'package:more_devs_ecommerce/features/home/widgets/home_categorie_section
 import 'package:more_devs_ecommerce/features/home/widgets/home_products_section.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
 import 'package:more_devs_ecommerce/features/login/models/auth_user.dart';
-import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
+import 'package:more_devs_ecommerce/shared/services/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/services/remote_config/remote_config_service.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_carousel.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
@@ -56,35 +57,39 @@ class _HomePageState extends State<HomePage> with AnalyticsMixin<HomePage> {
         title: Consumer<LoginController>(
           builder: (context, loginController, child) {
             final name = loginController.authUser?.user?.name;
-            return Text('Olá, $name', style: AppTextStyle.title);
+            return Text("${RemoteConfigService.instance.welcomeMessage} $name", style: AppTextStyle.title);
           },
         ),
         actions: [
-          Builder(
-            builder: (context) {
-              return Consumer<CartController>(
-                builder: (context, cartController, child) {
-                  if (cartController.isLoading) {
-                    return const Padding(
-                      padding: EdgeInsets.all(12),
-                      child: SizedBox(
-                        height: 24,
-                        width: 24,
-                        child: CircularProgressIndicator(strokeWidth: 3),
+          Visibility(
+            replacement: SizedBox(width: 24, height: 24,),
+            visible: RemoteConfigService.instance.cartEnabled,
+            child: Builder(
+              builder: (context) {
+                return Consumer<CartController>(
+                  builder: (context, cartController, child) {
+                    if (cartController.isLoading) {
+                      return const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: CircularProgressIndicator(strokeWidth: 3),
+                        ),
+                      );
+                    }
+            
+                    return Visibility(
+                      replacement: AppButtonCartPage(),
+                      visible: cartController.getProductCartQuantity > 0,
+                      child: AppBadgeCartButton(
+                        quantity: cartController.getProductCartQuantity,
                       ),
                     );
-                  }
-
-                  return Visibility(
-                    replacement: AppButtonCartPage(),
-                    visible: cartController.getProductCartQuantity > 0,
-                    child: AppBadgeCartButton(
-                      quantity: cartController.getProductCartQuantity,
-                    ),
-                  );
-                },
-              );
-            },
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),

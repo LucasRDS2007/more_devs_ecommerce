@@ -4,8 +4,9 @@ import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.da
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
 import 'package:more_devs_ecommerce/features/home/widgets/products_by_category_section.dart';
-import 'package:more_devs_ecommerce/shared/analytics/analytics_mixin.dart';
+import 'package:more_devs_ecommerce/shared/services/analytics/analytics_mixin.dart';
 import 'package:more_devs_ecommerce/shared/app_text_style.dart';
+import 'package:more_devs_ecommerce/shared/services/remote_config/remote_config_service.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_badge_cart_button.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_button_cart_page.dart';
 import 'package:more_devs_ecommerce/shared/widgets/app_dropdown_button_form_field.dart';
@@ -46,10 +47,14 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> with An
               return Consumer<CartController>(
                 builder: (context, cartController, child) {
                   return Visibility(
-                    replacement: AppButtonCartPage(),
-                    visible: cartController.getProductCartQuantity > 0,
-                    child: AppBadgeCartButton(
-                      quantity: cartController.getProductCartQuantity,
+                    replacement: SizedBox(width: 24, height: 24,),
+            visible: RemoteConfigService.instance.cartEnabled,
+                    child: Visibility(
+                      replacement: AppButtonCartPage(),
+                      visible: cartController.getProductCartQuantity > 0,
+                      child: AppBadgeCartButton(
+                        quantity: cartController.getProductCartQuantity,
+                      ),
                     ),
                   );
                 },
