@@ -21,12 +21,10 @@ class AppProductCard extends StatelessWidget {
       child: Container(
         width: 160,
         margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-        // color: Colors.amber,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Skeleton.replace(
-              // width: width,
               height: 160,
               replacement: Bone.square(
                 size: 160,

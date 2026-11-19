@@ -4,13 +4,14 @@ import 'package:more_devs_ecommerce/features/cart/controllers/cart_controller.da
 import 'package:more_devs_ecommerce/features/home/controllers/home_controller.dart';
 import 'package:more_devs_ecommerce/features/home/controllers/products_by_category_controller.dart';
 import 'package:more_devs_ecommerce/features/login/controllers/login_controller.dart';
-import 'package:more_devs_ecommerce/features/login/pages/login_page.dart';
 import 'package:more_devs_ecommerce/features/signup/controllers/signup_controller.dart';
 import 'package:more_devs_ecommerce/firebase_options.dart';
+import 'package:more_devs_ecommerce/initializer.dart';
 import 'package:more_devs_ecommerce/routes.dart';
 import 'package:more_devs_ecommerce/shared/services/remote_config/remote_config_service.dart';
 import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,8 @@ void main() async {
   );
   await RemoteConfigService.instance.init();
   await WakelockPlus.enable();
+  await Initializer.instance.getInitialRoute();
+  
 
   runApp(const MainApp());
 }
@@ -59,7 +62,19 @@ class MainApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           routes: AppRoutes.routes,
-          initialRoute: LoginPage.route,
+          initialRoute: Initializer.instance.initialRoute,
+          onGenerateInitialRoutes: (initialRouteName) {
+            final builder = AppRoutes.routes[initialRouteName]!;
+            return [
+              MaterialPageRoute(
+                settings: RouteSettings(
+                  name: initialRouteName,
+                  arguments: Initializer.instance.message,
+                ),
+                builder: builder,
+              ),
+            ];
+          },
         );
       },
     );

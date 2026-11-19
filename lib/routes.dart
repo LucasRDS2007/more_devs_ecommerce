@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:more_devs_ecommerce/features/block/pages/block_page.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/cart_page.dart';
 import 'package:more_devs_ecommerce/features/cart/pages/checkout_page.dart';
 import 'package:more_devs_ecommerce/features/home/models/category_models.dart';
@@ -22,5 +23,9 @@ class AppRoutes {
 
     CartPage.route: (context) => CartPage(),
     CheckoutPage.route: (context) => CheckoutPage(),
+    BlockPage.route: (context) {
+      final message = ModalRoute.of(context)!.settings.arguments as String;
+      return BlockPage(message: message);
+    },
   };
 }
